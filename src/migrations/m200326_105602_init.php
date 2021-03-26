@@ -44,7 +44,7 @@ class m200326_105602_init extends Migration
             'label' => $this->string(255)->null()->defaultValue(null),
             'type' => $this->string(255)->notNull()->defaultValue('string')
                            ->comment('Possible values: string, text, int, double, date, time, datetime, select, checkbox, radio, file'),
-            'default_value' => $this->string()->null()->defaultValue(null),
+            'default_value' => $this->string(255)->null()->defaultValue(null),
             'required' => $this->boolean()->notNull()->defaultValue(0),
             'multiple' => $this->boolean()->notNull()->defaultValue(0),
             'min' => $this->smallInteger()->unsigned()->null()->defaultValue(null),
@@ -55,7 +55,7 @@ class m200326_105602_init extends Migration
                                           ->comment('If operator is "!", this field is only required when the reference is not filled.'),
             'relation_model' => 'VARCHAR(512) CHARSET ascii COLLATE ascii_bin NULL DEFAULT NULL',
             'relation_field' => 'VARCHAR(255) CHARSET ascii COLLATE ascii_bin NULL DEFAULT NULL',
-            'relation_display_template' => 'VARCHAR(1024) CHARSET ascii COLLATE ascii_bin NULL DEFAULT NULL',
+            'relation_display_template' => $this->string(1024)->null()->defaultValue(null),
             'created_by' => $this->string(64)->null()->defaultValue(null),
             'updated_by' => $this->string(64)->null()->defaultValue(null),
             'created_at' => $this->integer()->unsigned()->notNull(),
