@@ -1,0 +1,60 @@
+{
+    "name": "simialbi/yii2-from-builder",
+    "type": "yii2-extension",
+    "description": "Form Builder module for yii2",
+    "keywords": [
+        "yii2",
+        "forms",
+        "form",
+        "form builder",
+        "code generator"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "simialbi",
+            "email": "simi.albi@outlook.com"
+        }
+    ],
+    "support": {
+        "source": "https://github.com/simialbi/yii2-form-builder",
+        "issues": "https://github.com/simialbi/yii2-form-builder/issues"
+    },
+    "minimum-stability": "beta",
+    "require": {
+        "php": ">=5.6",
+        "yiisoft/yii2": "^2.0.20",
+        "yiisoft/yii2-bootstrap4": "^2.0.4",
+        "arogachev/yii2-sortable": "^0.1.6",
+        "fortawesome/font-awesome": "^5.12.0",
+        "npm-asset/highlight.js": "^9.18.1",
+        "simialbi/yii2-fontawesome": "^3.4.8",
+        "simialbi/yii2-simialbi-base": ">=0.10.2 <1.0 | ^1.0.0",
+        "simialbi/yii2-summernote": "^1.1.0"
+    },
+    "require-dev": {
+        "yiisoft/yii2-coding-standards": "~2.0",
+        "phpunit/phpunit": "<7"
+    },
+    "autoload": {
+        "psr-4": {
+            "simialbi\\yii2\\formbuilder\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "yiiunit\\extensions\\formbuilder\\": "tests"
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}
