@@ -99,7 +99,7 @@ class Field extends ActiveRecord
             ['relation_model', 'string', 'max' => 512, 'encoding' => 'ASCII'],
             ['relation_display_template', 'string', 1024],
 
-            ['type', 'default', 'value' => static::SCENARIO_DEFAULT],
+            ['type', 'default', 'value' => static::TYPE_STRING],
             [['required', 'multiple'], 'default', 'value' => false],
 
             [['section_id', 'name', 'type', 'required', 'multiple'], 'required']
@@ -155,5 +155,23 @@ class Field extends ActiveRecord
             'created_at' => Yii::t('simialbi/formbuilder/models/field', 'Created at'),
             'updated_at' => Yii::t('simialbi/formbuilder/models/field', 'Updated at')
         ];
+    }
+
+    /**
+     * Get associated section
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSection()
+    {
+        return $this->hasOne(Section::class, ['id' => 'section_id']);
+    }
+
+    /**
+     * Get associated form
+     * @return \yii\db\ActiveQuery
+     */
+    public function getForm()
+    {
+        return $this->hasOne(Form::class, ['id' => 'section_id'])->via('section');
     }
 }

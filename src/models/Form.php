@@ -24,7 +24,7 @@ use yii\db\ActiveRecord;
  * @property integer|string $created_at
  * @property integer|string $updated_at
  *
- * @property-read Section $section
+ * @property-read Section[] $sections
  * @property-read Field[] $fields
  */
 class Form extends ActiveRecord
@@ -113,9 +113,9 @@ class Form extends ActiveRecord
      * Get associated section
      * @return \yii\db\ActiveQuery
      */
-    public function getSection()
+    public function getSections()
     {
-        return $this->hasOne(Section::class, ['form_id' => 'id']);
+        return $this->hasMany(Section::class, ['form_id' => 'id']);
     }
 
     /**

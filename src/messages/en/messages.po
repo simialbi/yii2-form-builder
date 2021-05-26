@@ -1,0 +1,152 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgctxt "simialbi/formbuilder/model/Form"
+msgid "Created at"
+msgstr "Created at"
+
+msgctxt "simialbi/formbuilder/model/Form"
+msgid "Created by"
+msgstr "Created by"
+
+msgctxt "simialbi/formbuilder/model/Form"
+msgid "Id"
+msgstr "Id"
+
+msgctxt "simialbi/formbuilder/model/Form"
+msgid "Language"
+msgstr "Language"
+
+msgctxt "simialbi/formbuilder/model/Form"
+msgid "Layout"
+msgstr "Layout"
+
+msgctxt "simialbi/formbuilder/model/Form"
+msgid "Name"
+msgstr "Name"
+
+msgctxt "simialbi/formbuilder/model/Form"
+msgid "Updated at"
+msgstr "Updated at"
+
+msgctxt "simialbi/formbuilder/model/Form"
+msgid "Updated by"
+msgstr "Updated by"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Created at"
+msgstr "Created at"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Created by"
+msgstr "Created by"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Default value"
+msgstr "Default value"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Dependency"
+msgstr "Dependency"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Dependency operator"
+msgstr "Dependency operator"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Id"
+msgstr "Id"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Label"
+msgstr "Label"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Max"
+msgstr "Max"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Min"
+msgstr "Min"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Multiple"
+msgstr "Multiple"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Name"
+msgstr "Name"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Relation display template"
+msgstr "Relation display template"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Relation field"
+msgstr "Relation field"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Relation model"
+msgstr "Relation model"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Required"
+msgstr "Required"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Section"
+msgstr "Section"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Type"
+msgstr "Type"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Updated at"
+msgstr "Updated at"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Updated by"
+msgstr "Updated by"
+
+msgctxt "simialbi/formbuilder/models/section"
+msgid "Created at"
+msgstr "Created at"
+
+msgctxt "simialbi/formbuilder/models/section"
+msgid "Created by"
+msgstr "Created by"
+
+msgctxt "simialbi/formbuilder/models/section"
+msgid "Default number of cols"
+msgstr "Default number of cols"
+
+msgctxt "simialbi/formbuilder/models/section"
+msgid "Form"
+msgstr "Form"
+
+msgctxt "simialbi/formbuilder/models/section"
+msgid "Id"
+msgstr "Id"
+
+msgctxt "simialbi/formbuilder/models/section"
+msgid "Name"
+msgstr "Name"
+
+msgctxt "simialbi/formbuilder/models/section"
+msgid "Updated at"
+msgstr "Updated at"
+
+msgctxt "simialbi/formbuilder/models/section"
+msgid "Updated by"
+msgstr "Updated by"
+
