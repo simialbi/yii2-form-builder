@@ -6,6 +6,7 @@
 
 namespace simialbi\yii2\formbuilder\controllers;
 
+use simialbi\yii2\formbuilder\models\Form;
 use simialbi\yii2\formbuilder\models\SearchForm;
 use simialbi\yii2\formbuilder\Module;
 use Yii;
@@ -39,6 +40,20 @@ class BuilderController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'layouts' => Module::getFormLayouts()
+        ]);
+    }
+
+    /**
+     * Create action
+     *
+     * @return string
+     */
+    public function actionCreate()
+    {
+        $model = new Form();
+
+        return $this->render('create', [
+            'model' => $model
         ]);
     }
 }

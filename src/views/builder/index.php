@@ -117,6 +117,9 @@ $this->params['breadcrumbs'] = [$this->title];
                 'filterWidgetOptions' => [
                     'type' => DatePicker::TYPE_INPUT
                 ]
+            ],
+            [
+                'class' => 'kartik\grid\ActionColumn'
             ]
         ]
     ]); ?>

@@ -1,5 +1,5 @@
 {
-    "name": "simialbi/yii2-from-builder",
+    "name": "simialbi/yii2-form-builder",
     "type": "yii2-extension",
     "description": "Form Builder module for yii2",
     "keywords": [
