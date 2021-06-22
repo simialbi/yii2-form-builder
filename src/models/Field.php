@@ -30,6 +30,7 @@ use yii\db\ActiveRecord;
  * @property string $relation_model
  * @property string $relation_field
  * @property string $relation_display_template
+ * @property integer $order
  * @property integer|string $created_by
  * @property integer|string $updated_by
  * @property integer|string $created_at
@@ -69,8 +70,9 @@ class Field extends ActiveRecord
      */
     public function rules()
     {
+        //*
         return [
-            [['id', 'section_id', 'dependency_id', 'min', 'max'], 'integer'],
+            [['id', 'section_id', 'dependency_id', 'min', 'max', 'order'], 'integer'],
             [['name', 'label', 'default_value'], 'string', 'max' => 255],
             [
                 'type',
@@ -97,13 +99,16 @@ class Field extends ActiveRecord
             ],
             ['relation_field', 'string', 'max' => 255, 'encoding' => 'ASCII'],
             ['relation_model', 'string', 'max' => 512, 'encoding' => 'ASCII'],
-            ['relation_display_template', 'string', 1024],
+            ['relation_display_template', 'string', 'max' => 1024],
 
             ['type', 'default', 'value' => static::TYPE_STRING],
             [['required', 'multiple'], 'default', 'value' => false],
 
             [['section_id', 'name', 'type', 'required', 'multiple'], 'required']
         ];
+        /*/
+        return [];
+        //*/
     }
 
     /**

@@ -65,7 +65,7 @@ class m200326_105602_init extends Migration
             'model' => 'VARCHAR(512) CHARSET ascii COLLATE ascii_bin NOT NULL',
             'language' => $this->string(5)->notNull()->defaultValue('en-US'),
             'label' => $this->string(255)->notNull(),
-            'PRIMARY ([[model]])'
+            'PRIMARY KEY ([[model]])'
         ]);
 
         $this->createIndex(

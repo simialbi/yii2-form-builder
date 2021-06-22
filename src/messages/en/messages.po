@@ -10,6 +10,106 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgctxt "simialbi/formbuilder"
+msgid "Add field"
+msgstr "Add field"
+
+msgctxt "simialbi/formbuilder"
+msgid "Add section"
+msgstr "Add section"
+
+msgctxt "simialbi/formbuilder"
+msgid "Create form"
+msgstr "Create form"
+
+msgctxt "simialbi/formbuilder"
+msgid "My forms"
+msgstr "My forms"
+
+msgctxt "simialbi/formbuilder/dependency-operator"
+msgid "Equal"
+msgstr "Equal"
+
+msgctxt "simialbi/formbuilder/dependency-operator"
+msgid "Grater than"
+msgstr "Grater than"
+
+msgctxt "simialbi/formbuilder/dependency-operator"
+msgid "Lower than"
+msgstr "Lower than"
+
+msgctxt "simialbi/formbuilder/dependency-operator"
+msgid "Not"
+msgstr "Not"
+
+msgctxt "simialbi/formbuilder/field"
+msgid "Dependency settings"
+msgstr "Dependency settings"
+
+msgctxt "simialbi/formbuilder/field"
+msgid "Relation settings"
+msgstr "Relation settings"
+
+msgctxt "simialbi/formbuilder/field-type"
+msgid "Checkbox"
+msgstr "Checkbox"
+
+msgctxt "simialbi/formbuilder/field-type"
+msgid "Date"
+msgstr "Date"
+
+msgctxt "simialbi/formbuilder/field-type"
+msgid "Date time"
+msgstr "Date time"
+
+msgctxt "simialbi/formbuilder/field-type"
+msgid "Double"
+msgstr "Double"
+
+msgctxt "simialbi/formbuilder/field-type"
+msgid "File"
+msgstr "File"
+
+msgctxt "simialbi/formbuilder/field-type"
+msgid "Integer"
+msgstr "Integer"
+
+msgctxt "simialbi/formbuilder/field-type"
+msgid "Radio"
+msgstr "Radio"
+
+msgctxt "simialbi/formbuilder/field-type"
+msgid "Select"
+msgstr "Select"
+
+msgctxt "simialbi/formbuilder/field-type"
+msgid "String"
+msgstr "String"
+
+msgctxt "simialbi/formbuilder/field-type"
+msgid "Text"
+msgstr "Text"
+
+msgctxt "simialbi/formbuilder/field-type"
+msgid "Time"
+msgstr "Time"
+
+msgctxt "simialbi/formbuilder/layout"
+msgid "Default"
+msgstr "Default"
+
+msgctxt "simialbi/formbuilder/layout"
+msgid "Floating labels"
+msgstr "Floating labels"
+
+msgctxt "simialbi/formbuilder/layout"
+msgid "Horizontal"
+msgstr "Horizontal"
+
+msgctxt "simialbi/formbuilder/layout"
+msgid "Placeholders"
+msgstr "Placeholders"
+
 msgctxt "simialbi/formbuilder/model/Form"
 msgid "Created at"
 msgstr "Created at"
@@ -149,4 +249,8 @@ msgstr "Updated at"
 msgctxt "simialbi/formbuilder/models/section"
 msgid "Updated by"
 msgstr "Updated by"
+
+msgctxt "simialbi/formbuilder/section"
+msgid "Section fields"
+msgstr "Section fields"
 

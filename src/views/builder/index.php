@@ -12,7 +12,7 @@ use yii\helpers\ArrayHelper;
 /** @var $dataProvider \yii\data\ActiveDataProvider */
 /** @var $layouts array */
 
-$this->title = Yii::t('simialbi/formbuilder', 'My Forms');
+$this->title = Yii::t('simialbi/formbuilder', 'My forms');
 $this->params['breadcrumbs'] = [$this->title];
 ?>
 

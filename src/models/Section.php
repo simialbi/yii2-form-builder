@@ -19,6 +19,7 @@ use yii\db\ActiveRecord;
  * @property integer $form_id
  * @property string $name
  * @property integer $default_number_of_cols
+ * @property integer $order
  * @property integer|string $created_by
  * @property integer|string $updated_by
  * @property integer|string $created_at
@@ -43,7 +44,7 @@ class Section extends ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'form_id'], 'integer'],
+            [['id', 'form_id', 'order'], 'integer'],
             ['name', 'string', 'max' => 255],
             ['default_number_of_cols', 'integer', 'min' => 2, 'max' => 6],
 

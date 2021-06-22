@@ -5,252 +5,256 @@ msgstr ""
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: de\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 msgctxt "simialbi/formbuilder"
 msgid "Add field"
-msgstr "Feld hinzufügen"
+msgstr ""
 
 msgctxt "simialbi/formbuilder"
 msgid "Add section"
-msgstr "Abschnitt hinzufügen"
+msgstr ""
 
 msgctxt "simialbi/formbuilder"
 msgid "Create form"
-msgstr "Formular erstellen"
+msgstr ""
+
+msgctxt "simialbi/formbuilder"
+msgid "My Forms"
+msgstr "@@@@"
 
 msgctxt "simialbi/formbuilder"
 msgid "My forms"
-msgstr "Meine Formulare"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/dependency-operator"
 msgid "Equal"
-msgstr "Gleich"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/dependency-operator"
 msgid "Grater than"
-msgstr "Grösser als"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/dependency-operator"
 msgid "Lower than"
-msgstr "Kleiner als"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/dependency-operator"
 msgid "Not"
-msgstr "Nicht"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/field"
 msgid "Dependency settings"
-msgstr "Abhängigkeitsregeln"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/field"
 msgid "Relation settings"
-msgstr "Verknüpfungseinstellungen"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/field-type"
 msgid "Checkbox"
-msgstr "Checkbox"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/field-type"
 msgid "Date"
-msgstr "Datum"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/field-type"
 msgid "Date time"
-msgstr "Datum / Zeit"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/field-type"
 msgid "Double"
-msgstr "Fliesskommazahl"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/field-type"
 msgid "File"
-msgstr "Datei(en)"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/field-type"
 msgid "Integer"
-msgstr "Ganzzahl"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/field-type"
 msgid "Radio"
-msgstr "Radio"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/field-type"
 msgid "Select"
-msgstr "Auswahlliste"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/field-type"
 msgid "String"
-msgstr "Text (einzeilig)"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/field-type"
 msgid "Text"
-msgstr "Text (mehrzeilig)"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/field-type"
 msgid "Time"
-msgstr "Zeit"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/layout"
 msgid "Default"
-msgstr "Standard"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/layout"
 msgid "Floating labels"
-msgstr "Floating labels"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/layout"
 msgid "Horizontal"
-msgstr "Horizontal"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/layout"
 msgid "Placeholders"
-msgstr "Platzhalter"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/model/Form"
 msgid "Created at"
-msgstr "Erstellt am"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/model/Form"
 msgid "Created by"
-msgstr "Erstellt von"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/model/Form"
 msgid "Id"
-msgstr "Id"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/model/Form"
 msgid "Language"
-msgstr "Sprache"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/model/Form"
 msgid "Layout"
-msgstr "Layout"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/model/Form"
 msgid "Name"
-msgstr "Name"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/model/Form"
 msgid "Updated at"
-msgstr "Bearbeitet am"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/model/Form"
 msgid "Updated by"
-msgstr "Bearbeitet von"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Created at"
-msgstr "Erstellt am"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Created by"
-msgstr "Erstellt von"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Default value"
-msgstr "Standard Wert"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Dependency"
-msgstr "Abhängigkeit"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Dependency operator"
-msgstr "Abhängigkeitsoperator"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Id"
-msgstr "Id"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Label"
-msgstr "Feldname"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Max"
-msgstr "Maximale Länge"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Min"
-msgstr "Minimale Länge"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Multiple"
-msgstr "Mehrfachauswahl möglich"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Name"
-msgstr "Technischer Name"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Relation display template"
-msgstr "Template Beziehung"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Relation field"
-msgstr "Beziehung zum Feld"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Relation model"
-msgstr "Beziehung Modell"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Required"
-msgstr "Pflichtfeld"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Section"
-msgstr "Abschnitt"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Type"
-msgstr "Typ"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Updated at"
-msgstr "Bearbeitet am"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Updated by"
-msgstr "Bearbeitet von"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/section"
 msgid "Created at"
-msgstr "Erstellt am"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/section"
 msgid "Created by"
-msgstr "Erstellt von"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/section"
 msgid "Default number of cols"
-msgstr "Standardbreite des Felds"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/section"
 msgid "Form"
-msgstr "Formular"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/section"
 msgid "Id"
-msgstr "Id"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/section"
 msgid "Name"
-msgstr "Name"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/section"
 msgid "Updated at"
-msgstr "Bearbeitet am"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/models/section"
 msgid "Updated by"
-msgstr "Bearbeitet von"
+msgstr ""
 
 msgctxt "simialbi/formbuilder/section"
 msgid "Section fields"
-msgstr "Abschnittsfelder"
+msgstr ""
 
