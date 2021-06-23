@@ -9,6 +9,7 @@ namespace simialbi\yii2\formbuilder\models;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -21,12 +22,9 @@ use yii\db\ActiveRecord;
  * @property string $label
  * @property string $type
  * @property string $default_value
- * @property boolean $required
  * @property boolean $multiple
  * @property integer $min
  * @property integer $max
- * @property integer $dependency_id
- * @property string $dependency_operator
  * @property string $relation_model
  * @property string $relation_field
  * @property string $relation_display_template
@@ -38,11 +36,13 @@ use yii\db\ActiveRecord;
  *
  * @property-read Section $section
  * @property-read Form $form
+ * @property-read Validator[] $fieldValidators
  */
 class Field extends ActiveRecord
 {
     const TYPE_STRING = 'string';
     const TYPE_TEXT = 'text';
+    const TYPE_RICH_TEXT = 'richText';
     const TYPE_INT = 'int';
     const TYPE_DOUBLE = 'double';
     const TYPE_DATE = 'date';
@@ -52,10 +52,6 @@ class Field extends ActiveRecord
     const TYPE_CHECKBOX = 'checkbox';
     const TYPE_RADIO = 'radio';
     const TYPE_FILE = 'file';
-    const OPERATOR_NOT = '!';
-    const OPERATOR_GT = '>';
-    const OPERATOR_LT = '<';
-    const OPERATOR_EQ = '=';
 
     /**
      * {@inheritDoc}
@@ -70,9 +66,8 @@ class Field extends ActiveRecord
      */
     public function rules()
     {
-        //*
         return [
-            [['id', 'section_id', 'dependency_id', 'min', 'max', 'order'], 'integer'],
+            [['id', 'section_id', 'min', 'max', 'order'], 'integer'],
             [['name', 'label', 'default_value'], 'string', 'max' => 255],
             [
                 'type',
@@ -80,6 +75,7 @@ class Field extends ActiveRecord
                 'range' => [
                     static::TYPE_STRING,
                     static::TYPE_TEXT,
+                    static::TYPE_RICH_TEXT,
                     static::TYPE_INT,
                     static::TYPE_DOUBLE,
                     static::TYPE_DATE,
@@ -91,24 +87,16 @@ class Field extends ActiveRecord
                     static::TYPE_FILE
                 ]
             ],
-            [['required', 'multiple'], 'boolean'],
-            [
-                'dependency_operator',
-                'in',
-                'range' => [static::OPERATOR_NOT, static::OPERATOR_GT, static::OPERATOR_LT, static::OPERATOR_EQ]
-            ],
+            [['multiple'], 'boolean'],
             ['relation_field', 'string', 'max' => 255, 'encoding' => 'ASCII'],
             ['relation_model', 'string', 'max' => 512, 'encoding' => 'ASCII'],
             ['relation_display_template', 'string', 'max' => 1024],
 
             ['type', 'default', 'value' => static::TYPE_STRING],
-            [['required', 'multiple'], 'default', 'value' => false],
+            [['multiple'], 'default', 'value' => false],
 
-            [['section_id', 'name', 'type', 'required', 'multiple'], 'required']
+            [['section_id', 'name', 'type', 'multiple'], 'required']
         ];
-        /*/
-        return [];
-        //*/
     }
 
     /**
@@ -146,12 +134,9 @@ class Field extends ActiveRecord
             'label' => Yii::t('simialbi/formbuilder/models/field', 'Label'),
             'type' => Yii::t('simialbi/formbuilder/models/field', 'Type'),
             'default_value' => Yii::t('simialbi/formbuilder/models/field', 'Default value'),
-            'required' => Yii::t('simialbi/formbuilder/models/field', 'Required'),
             'multiple' => Yii::t('simialbi/formbuilder/models/field', 'Multiple'),
             'min' => Yii::t('simialbi/formbuilder/models/field', 'Min'),
             'max' => Yii::t('simialbi/formbuilder/models/field', 'Max'),
-            'dependency_id' => Yii::t('simialbi/formbuilder/models/field', 'Dependency'),
-            'dependency_operator' => Yii::t('simialbi/formbuilder/models/field', 'Dependency operator'),
             'relation_model' => Yii::t('simialbi/formbuilder/models/field', 'Relation model'),
             'relation_field' => Yii::t('simialbi/formbuilder/models/field', 'Relation field'),
             'relation_display_template' => Yii::t('simialbi/formbuilder/models/field', 'Relation display template'),
@@ -164,19 +149,28 @@ class Field extends ActiveRecord
 
     /**
      * Get associated section
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getSection()
+    public function getSection(): ActiveQuery
     {
         return $this->hasOne(Section::class, ['id' => 'section_id']);
     }
 
     /**
      * Get associated form
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getForm()
+    public function getForm(): ActiveQuery
     {
         return $this->hasOne(Form::class, ['id' => 'section_id'])->via('section');
+    }
+
+    /**
+     * Get associated field validators
+     * @return ActiveQuery
+     */
+    public function getFieldValidators(): ActiveQuery
+    {
+        return $this->hasMany(Validator::class, ['field_id' => 'id']);
     }
 }

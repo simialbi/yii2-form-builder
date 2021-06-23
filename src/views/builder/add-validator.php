@@ -7,16 +7,17 @@ use yii\helpers\Url;
 use yii\widgets\Pjax;
 
 /** @var $this \yii\web\View */
-/** @var $model \simialbi\yii2\formbuilder\models\Field */
+/** @var $model \simialbi\yii2\formbuilder\models\Validator */
 /** @var $sectionCounter integer */
+/** @var $fieldCounter integer */
 /** @var $counter integer */
-/** @var $fieldTypes array */
-/** @var $relationClasses array */
+/** @var $validators array */
+/** @var $validatorOptions array */
 
 $form = ActiveForm::begin(['id' => 'createFormForm']);
 
 Pjax::begin([
-    'id' => "sa-formbuilder-section-$sectionCounter-field-pjax",
+    'id' => "sa-formbuilder-section-$sectionCounter-field-$fieldCounter-validators-pjax",
     'options' => ['class' => ['mb-3']],
     'enablePushState' => false,
     'clientOptions' => [
@@ -24,19 +25,20 @@ Pjax::begin([
     ],
     'timeout' => 0
 ]); ?>
-    <a href="<?= Url::to(['builder/add-field', 'sectionCounter' => $sectionCounter, 'counter' => $counter + 1]); ?>"
+    <a href="<?= Url::to(['builder/add-validator', 'sectionCounter' => $sectionCounter, 'fieldCounter' => $fieldCounter, 'counter' => $counter + 1]); ?>"
        class="btn btn-primary btn-sm">
-        <?= FAS::i('plus'); ?> <?= Yii::t('simialbi/formbuilder', 'Add field'); ?>
+        <?= FAS::i('plus'); ?> <?= Yii::t('simialbi/formbuilder', 'Add validator'); ?>
     </a>
 <?php
 
-echo $this->render('_field', [
+echo $this->render('_validator', [
     'form' => $form,
     'model' => $model,
     'secI' => $sectionCounter,
+    'fI' => $fieldCounter,
     'i' => $counter,
-    'fieldTypes' => $fieldTypes,
-    'relationClasses' => $relationClasses
+    'validators' => $validators,
+    'validatorOptions' => $validatorOptions
 ]);
 
 $js = '';

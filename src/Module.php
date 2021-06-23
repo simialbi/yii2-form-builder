@@ -12,7 +12,9 @@ use simialbi\yii2\models\UserInterface;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveRecordInterface;
+use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
+use yii\validators\Validator;
 
 /**
  * Class Module
@@ -55,6 +57,12 @@ class Module extends \simialbi\yii2\base\Module
     public $relationClasses = [];
 
     /**
+     * @var array A list of fully qualified class names of validator which are allowed to add to form fields. Each of
+     * them must implement
+     */
+    public $validators = [];
+
+    /**
      * Get Form layouts
      *
      * @return array
@@ -79,6 +87,7 @@ class Module extends \simialbi\yii2\base\Module
         return [
             Field::TYPE_STRING => Yii::t('simialbi/formbuilder/field-type', 'String'),
             Field::TYPE_TEXT => Yii::t('simialbi/formbuilder/field-type', 'Text'),
+            Field::TYPE_RICH_TEXT => Yii::t('simialbi/formbuilder/field-type', 'Rich text'),
             Field::TYPE_INT => Yii::t('simialbi/formbuilder/field-type', 'Integer'),
             Field::TYPE_DOUBLE => Yii::t('simialbi/formbuilder/field-type', 'Double'),
             Field::TYPE_DATE => Yii::t('simialbi/formbuilder/field-type', 'Date'),
@@ -92,23 +101,9 @@ class Module extends \simialbi\yii2\base\Module
     }
 
     /**
-     * Get dependency operators
-     *
-     * @return array
-     */
-    public static function getDependencyOperators(): array
-    {
-        return [
-            Field::OPERATOR_NOT => Yii::t('simialbi/formbuilder/dependency-operator', 'Not'),
-            Field::OPERATOR_GT => Yii::t('simialbi/formbuilder/dependency-operator', 'Grater than'),
-            Field::OPERATOR_LT => Yii::t('simialbi/formbuilder/dependency-operator', 'Lower than'),
-            Field::OPERATOR_EQ => Yii::t('simialbi/formbuilder/dependency-operator', 'Equal')
-        ];
-    }
-
-    /**
      * {@inheritDoc}
      * @throws InvalidConfigException
+     * @throws \ReflectionException
      */
     public function init()
     {
@@ -145,6 +140,12 @@ class Module extends \simialbi\yii2\base\Module
                 'name' => StringHelper::basename($className),
                 'attributes' => array_combine($class->attributes(), array_map([$class, 'getAttributeLabel'], $class->attributes()))
             ];
+        }
+        if (empty($this->validators)) {
+            foreach (Validator::$builtInValidators as $name => $validator) {
+                $key = is_array($validator) ? $validator['class'] : $validator;
+                $this->validators[$key] = Yii::t('simialbi/formbuilder/validators', Inflector::camel2words($name));
+            }
         }
 
         parent::init();

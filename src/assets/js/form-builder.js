@@ -1,20 +1,31 @@
 /* global jQuery, yii, Swiper, kanbanBaseUrl: false */
 window.sa = {};
 window.sa.formBuilder = (function ($, baseUrl) {
+    var attributes = null;
+
     var pub = {
         isActive: true,
 
+        /**
+         * Initialize module
+         */
         init: function () {
             initSortable();
             initDataActions();
             initFields();
             bindPjaxEvents();
+        },
+        /**
+         * Set attributes
+         * @param {Object} attrs
+         */
+        setAttributes: function (attrs) {
+            attributes = attrs;
         }
     };
 
     function initSortable()
     {
-
         $('#sa-formbuilder-sections').sortable({
             items: '> .card',
             handle: '.sa-formbuilder-section-sortable-handler',
@@ -32,9 +43,7 @@ window.sa.formBuilder = (function ($, baseUrl) {
 
     function setOrder(event, ui)
     {
-        var $element = ui.item,
-            $sortable = $element.closest('.ui-sortable'),
-            $items = $sortable.find('> .card');
+        var $element = ui.item, $sortable = $element.closest('.ui-sortable'), $items = $sortable.find('> .card');
 
         $items.each(function (index) {
             $(this).find('.sortable-field').val(index);
@@ -83,13 +92,22 @@ window.sa.formBuilder = (function ($, baseUrl) {
                 $name.val($this.val().toLowerCase().replace(/\s+/, '-').replace(/[^a-z0-9_-]/, ''));
             }
         });
+        $(document).on('change.sa.formBuilder', '.sa-formbuilder-field-relation_model .form-control', function () {
+            var $this = $(this),
+                $field = $(this).closest('.sa-formbuilder-field').find('.sa-formbuilder-field-relation_field .form-control');
+            $field.find('option:not(:empty)').remove();
+            $.each(attributes[$this.val()], function (key, val) {
+                $field.append('<option value="' + key + '">' + val + '</option>');
+            });
+            $field.trigger('change');
+        });
     }
 
     function bindPjaxEvents()
     {
         $(document).on('pjax:end', function (evt, xhr, options) {
             var $container = $(options.container);
-            if (options.container === '#sa-formbuilder-section-pjax' || options.container.match(/^#sa-formbuilder-section-\d+-field-pjax$/)) {
+            if (options.container === '#sa-formbuilder-section-pjax' || options.container.match(/^#sa-formbuilder-section-\d+-.+-pjax$/)) {
                 $container.find('.card').appendTo($container.parent());
             }
         });

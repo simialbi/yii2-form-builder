@@ -9,6 +9,7 @@ namespace simialbi\yii2\formbuilder\models;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -96,18 +97,18 @@ class Section extends ActiveRecord
 
     /**
      * Get associated form
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getForm()
+    public function getForm(): ActiveQuery
     {
         return $this->hasOne(Form::class, ['id' => 'form_id']);
     }
 
     /**
      * Get associated fields
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getFields()
+    public function getFields(): ActiveQuery
     {
         return $this->hasMany(Field::class, ['section_id' => 'id']);
     }
