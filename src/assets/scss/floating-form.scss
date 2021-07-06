@@ -1,0 +1,86 @@
+@import "variables";
+@import "mixins";
+
+.form-floating {
+    position: relative;
+
+    > .form-control,
+    > .form-select {
+        height: $form-floating-height;
+        padding: $form-floating-padding-y $form-floating-padding-x;
+    }
+
+    > label {
+        border: $input-border-width solid transparent; // Required for aligning label's text with the input as it affects inner box model
+        color: $input-placeholder-color;
+        height: 100%; // allow textareas
+        left: 0;
+        padding: $form-floating-padding-y $form-floating-padding-x;
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        transform-origin: 0 0;
+        @include transition($form-floating-transition);
+    }
+
+    // stylelint-disable no-duplicate-selectors
+    > .form-control {
+        &::placeholder {
+            color: transparent;
+        }
+
+        &:focus,
+        &:not(:placeholder-shown) {
+            padding-bottom: $form-floating-input-padding-b;
+            padding-top: $form-floating-input-padding-t;
+        }
+
+        // Duplicated because `:-webkit-autofill` invalidates other selectors when grouped
+        &:-webkit-autofill {
+            padding-bottom: $form-floating-input-padding-b;
+            padding-top: $form-floating-input-padding-t;
+        }
+    }
+
+    > .form-select {
+        padding-bottom: $form-floating-input-padding-b;
+        padding-top: $form-floating-input-padding-t;
+    }
+
+    > .form-control:focus,
+    > .form-control:not(:placeholder-shown),
+    > .form-select {
+        ~ label {
+            opacity: $form-floating-label-opacity;
+            transform: $form-floating-label-transform;
+        }
+    }
+
+    // Duplicated because `:-webkit-autofill` invalidates other selectors when grouped
+    > .form-control:-webkit-autofill {
+        ~ label {
+            opacity: $form-floating-label-opacity;
+            transform: $form-floating-label-transform;
+        }
+    }
+
+    // stylelint-enable no-duplicate-selectors
+}
+
+.row {
+    > .col,
+    > [class*="col-"] {
+        &.form-floating > label {
+            padding-left: calc(#{$form-floating-padding-x} + #{1.6 * ($grid-gutter-width / 2)});
+        }
+    }
+}
+
+.form-row {
+    > .col,
+    > [class*="col-"] {
+        &.form-floating > label {
+            padding-left: calc(#{$form-floating-padding-x} + #{1.6 * ($form-grid-gutter-width / 2)});
+        }
+    }
+}

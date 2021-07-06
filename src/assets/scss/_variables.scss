@@ -1,0 +1,32 @@
+$gray-600: #6c757d !default;
+
+$border-width: 1px !default;
+
+$grid-gutter-width: 1.5rem !default;
+
+$input-btn-padding-x: .75rem !default;
+
+$input-btn-border-width: $border-width !default;
+
+$input-border-width: $input-btn-border-width !default;
+$input-placeholder-color: $gray-600 !default;
+
+$input-padding-x: $input-btn-padding-x !default;
+$input-height-border: $input-border-width * 2 !default;
+
+$form-grid-gutter-width: 10px !default;
+
+$form-floating-height: calc(3.5rem + #{$input-height-border}) !default;
+$form-floating-line-height: 1.25 !default;
+$form-floating-padding-x: $input-padding-x !default;
+$form-floating-padding-y: 1rem !default;
+$form-floating-input-padding-t: 1.625rem !default;
+$form-floating-input-padding-b: .625rem !default;
+$form-floating-label-opacity: .65 !default;
+$form-floating-label-transform: scale(.85) translateY(-.5rem) translateX(.15rem) !default;
+$form-floating-transition: opacity .1s ease-in-out, transform .1s ease-in-out !default;
+
+$transition-base: all .2s ease-in-out !default;
+
+$enable-transitions: true !default;
+$enable-reduced-motion: true !default;

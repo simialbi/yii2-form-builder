@@ -1,11 +1,14 @@
 <?php
 
+use marqu3s\summernote\Summernote;
+use simialbi\yii2\datedropper\Datedropper;
+use yii\bootstrap4\Html;
+
 /** @var $this \yii\web\View */
 /** @var $form \yii\bootstrap4\ActiveForm */
 /** @var $model \yii\base\DynamicModel */
 /** @var $field \simialbi\yii2\formbuilder\models\Field */
-
-use marqu3s\summernote\Summernote;
+/** @var $options array */
 
 switch ($field->type) {
     case $field::TYPE_STRING:
@@ -26,11 +29,11 @@ switch ($field->type) {
         $params = [];
         break;
     case $field::TYPE_DATE:
-        $method = 'textInput';
-        $params = [['type' =>  'date-local']];
+        $method = 'widget';
+        $params = [Datedropper::class, []];
         break;
     case $field::TYPE_TIME;
-        $params = [['type' =>  'time-local']];
+        $params = [['type' => 'time-local']];
         break;
     case $field::TYPE_FILE:
         $method = 'fileInput';
@@ -53,9 +56,8 @@ switch ($field->type) {
         $params = [];
         break;
 }
+Html::addCssClass($options, ['form-group', 'col']);
 $fld = $form->field($model, $field->name, [
-    'options' => [
-        'class' => ['form-group', 'col']
-    ]
+    'options' => $options
 ]);
 echo call_user_func_array([$fld, $method], $params);

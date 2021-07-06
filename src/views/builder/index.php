@@ -3,6 +3,7 @@
 use kartik\date\DatePicker;
 use kartik\grid\GridView;
 use kartik\select2\Select2;
+use rmrevin\yii\fontawesome\FAB;
 use rmrevin\yii\fontawesome\FAS;
 use yii\bootstrap4\Html;
 use yii\helpers\ArrayHelper;
@@ -119,7 +120,14 @@ $this->params['breadcrumbs'] = [$this->title];
                 ]
             ],
             [
-                'class' => 'kartik\grid\ActionColumn'
+                'class' => 'kartik\grid\ActionColumn',
+                'template' => '{view} {form} {update} {delete}',
+                'buttons' => [
+                    'form' => function ($url) {
+                        return Html::a(FAB::i('wpforms'), $url, []);
+                    }
+                ],
+                'width' => '120px'
             ]
         ]
     ]); ?>

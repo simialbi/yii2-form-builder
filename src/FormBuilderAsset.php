@@ -23,6 +23,7 @@ class FormBuilderAsset extends AssetBundle
     public $depends = [
         '\yii\web\YiiAsset',
         '\yii\jui\JuiAsset',
-        '\simialbi\yii2\formbuilder\JsonEditorAsset'
+        '\simialbi\yii2\formbuilder\JsonEditorAsset',
+        '\simialbi\yii2\formbuilder\JsonFormAsset'
     ];
 }

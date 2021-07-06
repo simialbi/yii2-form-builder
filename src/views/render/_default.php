@@ -1,27 +1,10 @@
 <?php
 
-use simialbi\yii2\formbuilder\FloatingFormAsset;
-
 /** @var $this \yii\web\View */
 /** @var $form \yii\bootstrap4\ActiveForm */
 /** @var $model \yii\base\DynamicModel */
 /** @var $sections \simialbi\yii2\formbuilder\models\Section[] */
 
-/**
- * @param \yii\base\DynamicModel $model
- * @param string $attribute
- * @return array
- */
-$form->fieldConfig = function (\yii\base\DynamicModel $model, string $attribute) {
-    return [
-        'template' => "{input}\n{label}\n{hint}\n{error}",
-        'inputOptions' => [
-            'placeholder' => $model->getAttributeLabel($attribute)
-        ]
-    ];
-};
-
-FloatingFormAsset::register($this);
 ?>
 
 <?php foreach ($sections as $section): ?>
@@ -37,7 +20,7 @@ FloatingFormAsset::register($this);
                         'field' => $field,
                         'form' => $form,
                         'model' => $model,
-                        'options' => ['class' => 'form-floating']
+                        'options' => []
                     ]); ?>
                     <?php if (($i + 1) % $section->default_number_of_cols === 0): ?>
             </div>

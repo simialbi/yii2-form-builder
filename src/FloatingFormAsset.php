@@ -8,20 +8,17 @@ namespace simialbi\yii2\formbuilder;
 
 use simialbi\yii2\web\AssetBundle;
 
-class JsonEditorAsset extends AssetBundle
+class FloatingFormAsset extends AssetBundle
 {
     /**
      * @inheritdoc
      */
-    public $sourcePath = '@npm/jsoneditor/dist';
+    public $css = [
+        'css/floating-form.css'
+    ];
 
     /**
      * @inheritdoc
      */
-    public $css = ['jsoneditor.css'];
-
-    /**
-     * @inheritdoc
-     */
-    public $js = ['jsoneditor.js'];
+    public $depends = [];
 }

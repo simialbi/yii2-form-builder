@@ -70,7 +70,7 @@ use yii\widgets\Pjax;
                         ],
                         'timeout' => 0
                     ]); ?>
-                        <a href="<?= Url::to(['builder/add-field', 'sectionCounter' => $i, 'counter' => 0]); ?>"
+                        <a href="<?= Url::to(['builder/add-field', 'sectionCounter' => $i, 'counter' => $section->getFields()->count()]); ?>"
                            class="btn btn-primary btn-sm add-btn">
                             <?= FAS::i('plus'); ?> <?= Yii::t('simialbi/formbuilder', 'Add field'); ?>
                         </a>

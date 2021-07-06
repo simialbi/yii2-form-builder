@@ -28,7 +28,7 @@ $this->params['breadcrumbs'] = [
 ?>
 <div class="sa-formbuilder-form-create">
     <?php $form = ActiveForm::begin([
-        'id' => 'createFormForm'
+        'id' => 'buildFormForm'
     ]); ?>
 
     <?= $this->render('_form', [

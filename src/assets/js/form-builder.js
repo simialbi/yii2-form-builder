@@ -69,7 +69,7 @@ window.sa.formBuilder = (function ($, JSONEditor) {
 
     function initForm()
     {
-        $('#createFormForm,#updateFormForm').on('submit.sa.formBuilder', function () {
+        $('#buildFormForm').on('submit.sa.formBuilder', function () {
             $(this).find('.collapse').each(function () {
                 $(this).collapse('show');
             });

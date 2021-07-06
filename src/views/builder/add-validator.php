@@ -14,7 +14,7 @@ use yii\widgets\Pjax;
 /** @var $validators array */
 /** @var $validatorOptions array */
 
-$form = ActiveForm::begin(['id' => 'createFormForm']);
+$form = ActiveForm::begin(['id' => 'buildFormForm']);
 
 Pjax::begin([
     'id' => "sa-formbuilder-section-$sectionCounter-field-$fieldCounter-validators-pjax",

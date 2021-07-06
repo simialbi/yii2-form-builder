@@ -13,7 +13,7 @@ use yii\widgets\Pjax;
 /** @var $layouts array */
 /** @var $fieldTypes array */
 /** @var $relationClasses array */
-/* @var $validators array */
+/** @var $validators array */
 /** @var $validatorOptions array */
 
 echo $form->errorSummary($model);

@@ -66,67 +66,7 @@ class BuilderController extends Controller
         $sections[0]->default_number_of_cols = 2;
 
         if ($model->load(Yii::$app->request->post())) {
-            $sections = Yii::$app->request->post('Section', []);
-            $fields = Yii::$app->request->post('Field', []);
-            $validators = Yii::$app->request->post('Validator', []);
-
-            $transaction = Yii::$app->db->beginTransaction();
-            if ($model->save()) {
-                for ($i = 0; $i < count($sections); $i++) {
-                    $section = new Section();
-                    if ($section->load($sections[$i], '')) {
-                        $section->form_id = $model->id;
-                        if ($section->save()) {
-                            for ($k = 0; $k < count($fields[$i]); $k++) {
-                                $field = new Field();
-                                if ($field->load($fields[$i][$k], '')) {
-                                    $field->section_id = $section->id;
-                                    if ($field->save()) {
-                                        for ($l = 0; $l < count($validators[$i][$k]); $l++) {
-                                            $validator = new Validator();
-                                            if ($validator->load($validators[$i][$k][$l], '')) {
-                                                $validator->field_id = $field->id;
-                                                if (is_array($validator->configuration)) {
-                                                    $config = $validator->configuration;
-                                                    foreach ($config as $key => $value) {
-                                                        if ($value === '') {
-                                                            unset($config[$key]);
-                                                        } elseif ($value === 'off') {
-                                                            $config[$key] = false;
-                                                        } elseif ($value === 'on') {
-                                                            $config[$key] = true;
-                                                        }
-                                                    }
-                                                    $validator->configuration = Json::encode($config);
-                                                }
-                                                if (!$validator->save()) {
-                                                    $transaction->rollBack();
-                                                    var_dump($validator->errors);
-                                                    exit;
-                                                }
-                                            }
-                                        }
-                                    } else {
-                                        $transaction->rollBack();
-                                        var_dump($field->errors);
-                                        exit;
-                                    }
-                                }
-                            }
-                        } else {
-                            $transaction->rollBack();
-                            var_dump($section->errors);
-                            exit;
-                        }
-                    }
-                }
-            } else {
-                $transaction->rollBack();
-                var_dump($model->errors);
-                exit;
-            }
-
-            $transaction->commit();
+            $saved = $this->saveForm($model);
 
             return $this->redirect(['index']);
         }
@@ -149,11 +89,17 @@ class BuilderController extends Controller
      * @param integer $id The forms primary key
      *
      * @return string|\yii\web\Response
-     * @throws NotFoundHttpException
+     * @throws NotFoundHttpException|\yii\db\Exception
      */
     public function actionUpdate(int $id)
     {
         $model = $this->findForm($id);
+
+        if ($model->load(Yii::$app->request->post())) {
+            $this->saveForm($model);
+
+            return $this->redirect(['index']);
+        }
 
         return $this->render('update', [
             'model' => $model,
@@ -182,7 +128,11 @@ class BuilderController extends Controller
 
         return $this->renderAjax('add-section', [
             'model' => $model,
-            'counter' => $counter
+            'counter' => $counter,
+            'fieldTypes' => Module::getFieldTypes(),
+            'relationClasses' => $this->module->relationClasses,
+            'validators' => $this->module->validators,
+            'validatorOptions' => $this->getValidatorOptions()
         ]);
     }
 
@@ -204,7 +154,9 @@ class BuilderController extends Controller
             'sectionCounter' => $sectionCounter,
             'counter' => $counter,
             'fieldTypes' => Module::getFieldTypes(),
-            'relationClasses' => $this->module->relationClasses
+            'relationClasses' => $this->module->relationClasses,
+            'validators' => $this->module->validators,
+            'validatorOptions' => $this->getValidatorOptions()
         ]);
     }
 
@@ -232,6 +184,18 @@ class BuilderController extends Controller
     }
 
     /**
+     * Show form
+     *
+     * @param integer $id
+     *
+     * @return \yii\web\Response
+     */
+    public function actionForm(int $id): \yii\web\Response
+    {
+        return $this->redirect(['render/form', 'id' => $id]);
+    }
+
+    /**
      * Finds the model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      *
@@ -254,7 +218,7 @@ class BuilderController extends Controller
      *
      * @return array
      */
-    protected function getValidatorOptions()
+    protected function getValidatorOptions(): array
     {
         return Yii::$app->cache->getOrSet('sa-formbuilder-validators', function () {
             $properties = [];
@@ -309,5 +273,80 @@ class BuilderController extends Controller
 
             return $properties;
         }, 86400);
+    }
+
+    /**
+     * Save form
+     * @param Form $model
+     * @return boolean `true` if save operation was successful otherwise `false`
+     * @throws \yii\db\Exception
+     */
+    protected function saveForm(Form $model): bool
+    {
+        $sections = Yii::$app->request->post('Section', []);
+        $fields = Yii::$app->request->post('Field', []);
+        $validators = Yii::$app->request->post('Validator', []);
+
+        $transaction = Yii::$app->db->beginTransaction();
+        if ($model->save()) {
+            for ($i = 0; $i < count($sections); $i++) {
+                $section = (!empty($sections[$i]['id'])) ? Section::findOne($sections[$i]['id']) : new Section();
+                if ($section->load($sections[$i], '')) {
+                    $section->form_id = $model->id;
+                    if ($section->save()) {
+                        for ($k = 0; $k < count($fields[$i]); $k++) {
+                            $field = (!empty($fields[$i][$k]['id'])) ? Field::findOne($fields[$i][$k]['id']) : new Field();
+                            if ($field->load($fields[$i][$k], '')) {
+                                $field->section_id = $section->id;
+                                if ($field->save()) {
+                                    for ($l = 0; $l < count($validators[$i][$k]); $l++) {
+                                        $validator = (!empty($validators[$i][$k][$l]['id']))
+                                            ? Validator::findOne($validators[$i][$k][$l]['id'])
+                                            : new Validator();
+                                        if ($validator->load($validators[$i][$k][$l], '')) {
+                                            $validator->field_id = $field->id;
+                                            if (is_array($validator->configuration)) {
+                                                $config = $validator->configuration;
+                                                foreach ($config as $key => $value) {
+                                                    if ($value === '') {
+                                                        unset($config[$key]);
+                                                    } elseif ($value === 'off') {
+                                                        $config[$key] = false;
+                                                    } elseif ($value === 'on') {
+                                                        $config[$key] = true;
+                                                    }
+                                                }
+                                                $validator->configuration = Json::encode($config);
+                                            }
+                                            if (!$validator->save()) {
+                                                $transaction->rollBack();
+                                                var_dump($validator->errors);
+                                                exit;
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    $transaction->rollBack();
+                                    var_dump($field->errors);
+                                    exit;
+                                }
+                            }
+                        }
+                    } else {
+                        $transaction->rollBack();
+                        var_dump($section->errors);
+                        exit;
+                    }
+                }
+            }
+        } else {
+            $transaction->rollBack();
+            var_dump($model->errors);
+            exit;
+        }
+
+        $transaction->commit();
+
+        return true;
     }
 }

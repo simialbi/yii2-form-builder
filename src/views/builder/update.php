@@ -28,7 +28,7 @@ $this->params['breadcrumbs'] = [
 ?>
 <div class="sa-formbuilder-form-update">
     <?php $form = ActiveForm::begin([
-        'id' => 'updateFormForm'
+        'id' => 'buildFormForm'
     ]); ?>
 
     <?= $this->render('_form', [

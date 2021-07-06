@@ -12,8 +12,10 @@ use yii\widgets\Pjax;
 /** @var $counter integer */
 /** @var $fieldTypes array */
 /** @var $relationClasses array */
+/* @var $validators array */
+/** @var $validatorOptions array */
 
-$form = ActiveForm::begin(['id' => 'createFormForm']);
+$form = ActiveForm::begin(['id' => 'buildFormForm']);
 
 Pjax::begin([
     'id' => "sa-formbuilder-section-$sectionCounter-field-pjax",
@@ -36,7 +38,9 @@ echo $this->render('_field', [
     'secI' => $sectionCounter,
     'i' => $counter,
     'fieldTypes' => $fieldTypes,
-    'relationClasses' => $relationClasses
+    'relationClasses' => $relationClasses,
+    'validators' => $validators,
+    'validatorOptions' => $validatorOptions,
 ]);
 
 $js = '';

@@ -9,8 +9,12 @@ use yii\widgets\Pjax;
 /** @var $this \yii\web\View */
 /** @var $model \simialbi\yii2\formbuilder\models\Section */
 /** @var $counter integer */
+/** @var $fieldTypes array */
+/** @var $relationClasses array */
+/* @var $validators array */
+/** @var $validatorOptions array */
 
-$form = ActiveForm::begin(['id' => 'createFormForm']);
+$form = ActiveForm::begin(['id' => 'buildFormForm']);
 
 Pjax::begin([
     'id' => 'sa-formbuilder-section-pjax',
@@ -30,7 +34,11 @@ Pjax::begin([
 echo $this->render('_section', [
     'form' => $form,
     'section' => $model,
-    'i' => $counter
+    'i' => $counter,
+    'fieldTypes' => $fieldTypes,
+    'validators' => $validators,
+    'relationClasses' => $relationClasses,
+    'validatorOptions' => $validatorOptions
 ]);
 
 $js = '';

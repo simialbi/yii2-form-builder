@@ -113,7 +113,7 @@ use yii\widgets\Pjax;
                             ],
                             'timeout' => 0
                         ]); ?>
-                        <a href="<?= Url::to(['builder/add-validator', 'sectionCounter' => $secI, 'fieldCounter' => $i, 'counter' => 0]); ?>"
+                        <a href="<?= Url::to(['builder/add-validator', 'sectionCounter' => $secI, 'fieldCounter' => $i, 'counter' => $model->getFieldValidators()->count()]); ?>"
                            class="btn btn-primary btn-sm add-btn">
                             <?= FAS::i('plus'); ?> <?= Yii::t('simialbi/formbuilder', 'Add validator'); ?>
                         </a>
