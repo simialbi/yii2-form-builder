@@ -22,7 +22,7 @@ Pjax::begin([
     'timeout' => 0
 ]);
 ?>
-    <a href="<?= Url::to(['builder/add-section', 'counter' => $counter + 1]); ?>" class="btn btn-primary btn-sm">
+    <a href="<?= Url::to(['builder/add-section', 'counter' => $counter + 1]); ?>" class="btn btn-primary btn-sm add-btn">
         <?= FAS::i('plus'); ?> <?= Yii::t('simialbi/formbuilder', 'Add section'); ?>
     </a>
 <?php

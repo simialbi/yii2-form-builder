@@ -8,6 +8,10 @@ use yii\widgets\Pjax;
 /** @var $form \yii\bootstrap4\ActiveForm */
 /** @var $section \simialbi\yii2\formbuilder\models\Section */
 /** @var $i integer */
+/** @var $fieldTypes array */
+/** @var $relationClasses array */
+/* @var $validators array */
+/** @var $validatorOptions array */
 
 ?>
 <div class="card sa-formbuilder-section">
@@ -66,10 +70,24 @@ use yii\widgets\Pjax;
                         ],
                         'timeout' => 0
                     ]); ?>
-                        <a href="<?= Url::to(['builder/add-field', 'sectionCounter' => $i, 'counter' => 0]); ?>" class="btn btn-primary btn-sm">
+                        <a href="<?= Url::to(['builder/add-field', 'sectionCounter' => $i, 'counter' => 0]); ?>"
+                           class="btn btn-primary btn-sm add-btn">
                             <?= FAS::i('plus'); ?> <?= Yii::t('simialbi/formbuilder', 'Add field'); ?>
                         </a>
                     <?php Pjax::end(); ?>
+
+                    <?php for ($k = 0; $k < count($section->fields); $k++): ?>
+                        <?= $this->render('_field', [
+                            'form' => $form,
+                            'fieldTypes' => $fieldTypes,
+                            'i' => $k,
+                            'relationClasses' => $relationClasses,
+                            'model' => $section->fields[$k],
+                            'secI' => $i,
+                            'validators' => $validators,
+                            'validatorOptions' => $validatorOptions
+                        ]); ?>
+                    <?php endfor; ?>
                 </div>
             </fieldset>
         </div>

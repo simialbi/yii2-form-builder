@@ -2,9 +2,11 @@
 
 use kartik\select2\Select2;
 use rmrevin\yii\fontawesome\FAS;
+use yii\bootstrap4\Html;
+use yii\helpers\Json;
 
 /* @var $this \yii\web\View */
-/* @var $form \yii\base\Widget|\yii\bootstrap4\ActiveForm */
+/* @var $form \yii\bootstrap4\ActiveForm */
 /* @var $model \simialbi\yii2\formbuilder\models\Validator */
 /* @var $secI int */
 /* @var $fI int */
@@ -22,7 +24,7 @@ use rmrevin\yii\fontawesome\FAS;
     <div class="card-header d-flex">
         <?= $form->field($model, "[$secI][$fI][$i]name", [
             'options' => [
-                'class' => ['flex-grow-1', 'ml-1', 'sa-formbuilder-field-name']
+                'class' => ['flex-grow-1', 'ml-1']
             ],
             'inputOptions' => [
                 'class' => ['form-control', 'form-control-sm'],
@@ -45,7 +47,7 @@ use rmrevin\yii\fontawesome\FAS;
             <div class="form-row">
                 <?= $form->field($model, "[$secI][$fI][$i]class", [
                     'options' => [
-                        'class' => ['form-group', 'col-6', 'col-lg-4']
+                        'class' => ['form-group', 'sa-formbuilder-validator-class', 'col-6', 'col-lg-4']
                     ]
                 ])->widget(Select2::class, [
                     'data' => $validators,
@@ -53,9 +55,27 @@ use rmrevin\yii\fontawesome\FAS;
                     'bsVersion' => 4,
                     'pluginOptions' => [
                         'allowClear' => false
+                    ],
+                    'options' => [
+                        'data' => [
+                            'container' => "#sa-formbuilder-section-field-validator-form-$secI-$fI-$i"
+                        ]
                     ]
                 ]); ?>
+            </div>
+            <div class="form-row">
+                <div class="col-12">
+                    <div id="sa-formbuilder-section-field-validator-form-<?= $secI; ?>-<?= $fI; ?>-<?= $i; ?>"></div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<?php
+$validates = Json::encode($validatorOptions);
+$this->registerJs("window.sa.formBuilder.setValidators($validates);");
+
+if ($model->configuration) {
+    $this->registerJs("window.sa.formBuilder.initValidator.apply(jQuery('#" . Html::getInputId($model, "[$secI][$fI][$i]class") . "').get(0), [{$model->configuration}]);");
+}

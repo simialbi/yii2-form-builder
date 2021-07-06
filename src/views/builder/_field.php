@@ -15,7 +15,8 @@ use yii\widgets\Pjax;
 /* @var $i int */
 /** @var $fieldTypes array */
 /** @var $relationClasses array */
-
+/* @var $validators array */
+/** @var $validatorOptions array */
 
 ?>
     <div class="card sa-formbuilder-field">
@@ -80,43 +81,18 @@ use yii\widgets\Pjax;
                         'options' => [
                             'data' => [
                                 'show' => [
-                                    "#sa-formbuilder-field-$secI-$i-min",
-                                    "#sa-formbuilder-field-$secI-$i-max",
                                     "#sa-formbuilder-field-$secI-$i-multiple"
                                 ]
                             ]
                         ]
                     ]); ?>
-                    <?= $form->field($model, "[$secI][$i]defaultValue", [
-                        'options' => [
-                            'class' => ['form-group', 'col-12', 'col-lg-4']
-                        ]
-                    ])->textInput(); ?>
-                    <?= $form->field($model, "[$secI][$i]min", [
-                        'options' => [
-                            'id' => "sa-formbuilder-field-$secI-$i-min",
-                            'class' => ['form-group', 'col-6', 'col-lg-2'],
-                            'data' => [
-                                'show-condition' => [Field::TYPE_INT, Field::TYPE_DOUBLE]
-                            ]
-                        ]
-                    ])->textInput(); ?>
-                    <?= $form->field($model, "[$secI][$i]max", [
-                        'options' => [
-                            'id' => "sa-formbuilder-field-$secI-$i-max",
-                            'class' => ['form-group', 'col-6', 'col-lg-2'],
-                            'data' => [
-                                'show-condition' => [Field::TYPE_INT, Field::TYPE_DOUBLE]
-                            ]
-                        ]
-                    ])->textInput(); ?>
                 </div>
                 <div class="form-row">
                     <div class="col-12 d-flex">
                         <?= $form->field($model, "[$secI][$i]multiple", [
                             'options' => [
                                 'id' => "sa-formbuilder-field-$secI-$i-multiple",
-                                'class' => ['form-group', 'ml-3'],
+                                'class' => ['form-group'],
                                 'data' => [
                                     'show-condition' => [Field::TYPE_FILE, Field::TYPE_SELECT]
                                 ]
@@ -138,10 +114,22 @@ use yii\widgets\Pjax;
                             'timeout' => 0
                         ]); ?>
                         <a href="<?= Url::to(['builder/add-validator', 'sectionCounter' => $secI, 'fieldCounter' => $i, 'counter' => 0]); ?>"
-                           class="btn btn-primary btn-sm">
+                           class="btn btn-primary btn-sm add-btn">
                             <?= FAS::i('plus'); ?> <?= Yii::t('simialbi/formbuilder', 'Add validator'); ?>
                         </a>
                         <?php Pjax::end(); ?>
+
+                        <?php for ($k = 0; $k < count($model->fieldValidators); $k++): ?>
+                            <?= $this->render('_validator', [
+                                'fI' => $i,
+                                'form' => $form,
+                                'validators' => $validators,
+                                'i' => $k,
+                                'model' => $model->fieldValidators[$k],
+                                'secI' => $secI,
+                                'validatorOptions' => $validatorOptions
+                            ]); ?>
+                        <?php endfor; ?>
                     </div>
                 </fieldset>
                 <fieldset class="mt-3">
@@ -150,9 +138,6 @@ use yii\widgets\Pjax;
                         <?= $form->field($model, "[$secI][$i]relation_model", [
                             'options' => [
                                 'class' => ['form-group', 'sa-formbuilder-field-relation_model', 'col-12', 'col-lg-3']
-                            ],
-                            'inputOptions' => [
-                                'class' => ['form-control']
                             ]
                         ])->widget(Select2::class, [
                             'data' => ArrayHelper::getColumn($relationClasses, 'name'),

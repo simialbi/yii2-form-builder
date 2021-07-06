@@ -11,6 +11,10 @@ use yii\widgets\Pjax;
 /** @var $sections \simialbi\yii2\formbuilder\models\Section[] */
 /** @var $languages array */
 /** @var $layouts array */
+/** @var $fieldTypes array */
+/** @var $relationClasses array */
+/* @var $validators array */
+/** @var $validatorOptions array */
 
 echo $form->errorSummary($model);
 ?>
@@ -59,7 +63,7 @@ echo $form->errorSummary($model);
         ],
         'timeout' => 0
     ]); ?>
-    <a href="<?= Url::to(['builder/add-section', 'counter' => count($sections)]); ?>" class="btn btn-primary btn-sm">
+    <a href="<?= Url::to(['builder/add-section', 'counter' => count($sections)]); ?>" class="btn btn-primary btn-sm add-btn">
         <?= FAS::i('plus'); ?> <?= Yii::t('simialbi/formbuilder', 'Add section'); ?>
     </a>
     <?php Pjax::end(); ?>
@@ -68,7 +72,11 @@ echo $form->errorSummary($model);
         <?= $this->render('_section', [
             'form' => $form,
             'section' => $sections[$i],
-            'i' => $i
+            'i' => $i,
+            'fieldTypes' => $fieldTypes,
+            'relationClasses' => $relationClasses,
+            'validators' => $validators,
+            'validatorOptions' => $validatorOptions
         ]); ?>
     <?php endfor; ?>
 </div>

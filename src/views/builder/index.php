@@ -112,7 +112,7 @@ $this->params['breadcrumbs'] = [$this->title];
             [
                 'class' => 'kartik\grid\DataColumn',
                 'attribute' => 'created_at',
-                'format' => 'datetime:dd.MM.yyyy HH:mm',
+                'format' => ['datetime', 'dd.MM.yyyy HH:mm'],
                 'filterType' => GridView::FILTER_DATE,
                 'filterWidgetOptions' => [
                     'type' => DatePicker::TYPE_INPUT

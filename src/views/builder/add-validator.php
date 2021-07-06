@@ -26,7 +26,7 @@ Pjax::begin([
     'timeout' => 0
 ]); ?>
     <a href="<?= Url::to(['builder/add-validator', 'sectionCounter' => $sectionCounter, 'fieldCounter' => $fieldCounter, 'counter' => $counter + 1]); ?>"
-       class="btn btn-primary btn-sm">
+       class="btn btn-primary btn-sm add-btn">
         <?= FAS::i('plus'); ?> <?= Yii::t('simialbi/formbuilder', 'Add validator'); ?>
     </a>
 <?php

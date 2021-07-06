@@ -34,7 +34,9 @@
         "npm-asset/json-editor--json-editor": "^2.5.4",
         "simialbi/yii2-fontawesome": "^3.4.8",
         "simialbi/yii2-simialbi-base": ">=0.10.2 <1.0 | ^1.0.0",
-        "simialbi/yii2-summernote": "^1.1.0"
+        "simialbi/yii2-summernote": "^1.1.0",
+        "simialbi/yii2-widget-datedropper": "^1.0.0-beta.2",
+        "simialbi/yii2-widget-timedropper": "^1.0.0-beta.3"
     },
     "require-dev": {
         "yiisoft/yii2-coding-standards": "~2.0",

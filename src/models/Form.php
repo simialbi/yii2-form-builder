@@ -125,6 +125,6 @@ class Form extends ActiveRecord
      */
     public function getFields(): ActiveQuery
     {
-        return $this->hasMany(Field::class, ['section_id' => 'id'])->via('section');
+        return $this->hasMany(Field::class, ['section_id' => 'id'])->via('sections');
     }
 }

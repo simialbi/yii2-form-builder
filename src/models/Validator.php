@@ -17,7 +17,7 @@ use yii\db\ActiveRecord;
  * @property integer $field_id
  * @property string $name
  * @property string $class
- * @property string $configuration
+ * @property string|array $configuration
  *
  * @property-read Field $field
  */

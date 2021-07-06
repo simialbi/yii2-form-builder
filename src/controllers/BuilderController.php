@@ -15,7 +15,9 @@ use simialbi\yii2\formbuilder\models\Validator;
 use simialbi\yii2\formbuilder\Module;
 use Yii;
 use yii\helpers\Inflector;
+use yii\helpers\Json;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * Class BuilderController
@@ -53,20 +55,115 @@ class BuilderController extends Controller
     /**
      * Create action
      *
-     * @return string
+     * @return string|\yii\web\Response
+     * @throws \yii\db\Exception
      */
-    public function actionCreate(): string
+    public function actionCreate()
     {
         $model = new Form();
         $sections = [new Section()];
         $sections[0]->order = 0;
         $sections[0]->default_number_of_cols = 2;
 
+        if ($model->load(Yii::$app->request->post())) {
+            $sections = Yii::$app->request->post('Section', []);
+            $fields = Yii::$app->request->post('Field', []);
+            $validators = Yii::$app->request->post('Validator', []);
+
+            $transaction = Yii::$app->db->beginTransaction();
+            if ($model->save()) {
+                for ($i = 0; $i < count($sections); $i++) {
+                    $section = new Section();
+                    if ($section->load($sections[$i], '')) {
+                        $section->form_id = $model->id;
+                        if ($section->save()) {
+                            for ($k = 0; $k < count($fields[$i]); $k++) {
+                                $field = new Field();
+                                if ($field->load($fields[$i][$k], '')) {
+                                    $field->section_id = $section->id;
+                                    if ($field->save()) {
+                                        for ($l = 0; $l < count($validators[$i][$k]); $l++) {
+                                            $validator = new Validator();
+                                            if ($validator->load($validators[$i][$k][$l], '')) {
+                                                $validator->field_id = $field->id;
+                                                if (is_array($validator->configuration)) {
+                                                    $config = $validator->configuration;
+                                                    foreach ($config as $key => $value) {
+                                                        if ($value === '') {
+                                                            unset($config[$key]);
+                                                        } elseif ($value === 'off') {
+                                                            $config[$key] = false;
+                                                        } elseif ($value === 'on') {
+                                                            $config[$key] = true;
+                                                        }
+                                                    }
+                                                    $validator->configuration = Json::encode($config);
+                                                }
+                                                if (!$validator->save()) {
+                                                    $transaction->rollBack();
+                                                    var_dump($validator->errors);
+                                                    exit;
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        $transaction->rollBack();
+                                        var_dump($field->errors);
+                                        exit;
+                                    }
+                                }
+                            }
+                        } else {
+                            $transaction->rollBack();
+                            var_dump($section->errors);
+                            exit;
+                        }
+                    }
+                }
+            } else {
+                $transaction->rollBack();
+                var_dump($model->errors);
+                exit;
+            }
+
+            $transaction->commit();
+
+            return $this->redirect(['index']);
+        }
+
         return $this->render('create', [
             'model' => $model,
             'sections' => $sections,
             'languages' => $this->module->languages,
-            'layouts' => Module::getFormLayouts()
+            'layouts' => Module::getFormLayouts(),
+            'fieldTypes' => Module::getFieldTypes(),
+            'relationClasses' => $this->module->relationClasses,
+            'validators' => $this->module->validators,
+            'validatorOptions' => $this->getValidatorOptions()
+        ]);
+    }
+
+    /**
+     * Update an existing form
+     *
+     * @param integer $id The forms primary key
+     *
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
+     */
+    public function actionUpdate(int $id)
+    {
+        $model = $this->findForm($id);
+
+        return $this->render('update', [
+            'model' => $model,
+            'sections' => $model->sections,
+            'languages' => $this->module->languages,
+            'layouts' => Module::getFormLayouts(),
+            'fieldTypes' => Module::getFieldTypes(),
+            'relationClasses' => $this->module->relationClasses,
+            'validators' => $this->module->validators,
+            'validatorOptions' => $this->getValidatorOptions()
         ]);
     }
 
@@ -124,7 +221,42 @@ class BuilderController extends Controller
     {
         $model = new Validator();
 
-        $validatorOptions = Yii::$app->cache->getOrSet('sa-formbuilder-validators', function () {
+        return $this->renderAjax('add-validator', [
+            'model' => $model,
+            'sectionCounter' => $sectionCounter,
+            'fieldCounter' => $fieldCounter,
+            'counter' => $counter,
+            'validators' => $this->module->validators,
+            'validatorOptions' => $this->getValidatorOptions()
+        ]);
+    }
+
+    /**
+     * Finds the model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     *
+     * @param mixed $condition primary key value or a set of column values
+     *
+     * @return Form the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findForm($condition): Form
+    {
+        if (($model = Form::findOne($condition)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
+        }
+    }
+
+    /**
+     * Get validator options
+     *
+     * @return array
+     */
+    protected function getValidatorOptions()
+    {
+        return Yii::$app->cache->getOrSet('sa-formbuilder-validators', function () {
             $properties = [];
             $markdown = new MarkdownExtra();
             $markdown->html5 = true;
@@ -145,7 +277,7 @@ class BuilderController extends Controller
                     $comment = strtr(trim(preg_replace('/^\s*\**([ \t])?/m', '', trim($property->getDocComment(), '/'))), "\r", '');
                     if (preg_match('/^\s*@\w+ ([\w|\\\\]+) (.+)/s', $comment, $matches)) {
                         $comment = $matches[2];
-                        if (preg_match('/(string|int(?:eger)?|array|bool(?:ean|float|double)?)/', $matches[1], $matches)) {
+                        if (preg_match('/(string|int(?:eger)?|bool(?:ean|float|double)?)/', $matches[1], $matches)) { // TODO |array
                             switch ($matches[1]) {
                                 case 'int':
                                 case 'integer':
@@ -177,14 +309,5 @@ class BuilderController extends Controller
 
             return $properties;
         }, 86400);
-
-        return $this->renderAjax('add-validator', [
-            'model' => $model,
-            'sectionCounter' => $sectionCounter,
-            'fieldCounter' => $fieldCounter,
-            'counter' => $counter,
-            'validators' => $this->module->validators,
-            'validatorOptions' => $validatorOptions
-        ]);
     }
 }

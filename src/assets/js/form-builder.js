@@ -1,7 +1,9 @@
-/* global jQuery, yii, Swiper, kanbanBaseUrl: false */
+/* global jQuery, yii, Swiper, formBuilderBaseUrl, JSONEditor: false */
 window.sa = {};
-window.sa.formBuilder = (function ($, baseUrl) {
+window.sa.formBuilder = (function ($, JSONEditor) {
     var attributes = null;
+    var validators = null;
+    var editors = {};
 
     var pub = {
         isActive: true,
@@ -10,9 +12,11 @@ window.sa.formBuilder = (function ($, baseUrl) {
          * Initialize module
          */
         init: function () {
+            initForm();
             initSortable();
             initDataActions();
             initFields();
+            initValidators();
             bindPjaxEvents();
         },
         /**
@@ -21,8 +25,58 @@ window.sa.formBuilder = (function ($, baseUrl) {
          */
         setAttributes: function (attrs) {
             attributes = attrs;
+        },
+        /**
+         * Set validators
+         * @param {Object} validates
+         */
+        setValidators: function (validates) {
+            validators = validates;
+        },
+
+        /**
+         * Initializes a validator form
+         * @param {Object} initValue
+         */
+        initValidator: function (initValue) {
+            var $this = $(this), $form = $($this.data('container')), schema = validators[$this.val()],
+                id = $this.prop('id'), formName = $this.attr('name').replace('class', 'configuration');
+            var options = {
+                disable_edit_json: true,
+                disable_properties: true,
+                form_name_root: formName,
+                schema: schema,
+                theme: 'bootstrap4',
+                use_default_values: false
+            };
+
+            if (editors[id] && editors[id].destroy) {
+                editors[id].destroy();
+            }
+
+            if (typeof initValue === 'object') {
+                $.each(schema.properties, function (key, value) {
+                    if (!initValue.hasOwnProperty(key)) {
+                        initValue[key] = '';
+                    }
+                });
+                options.startval = initValue;
+            }
+
+            editors[id] = new JSONEditor($form.get(0), options);
         }
     };
+
+    function initForm()
+    {
+        $('#createFormForm,#updateFormForm').on('submit.sa.formBuilder', function () {
+            $(this).find('.collapse').each(function () {
+                $(this).collapse('show');
+            });
+
+            return true;
+        });
+    }
 
     function initSortable()
     {
@@ -53,12 +107,17 @@ window.sa.formBuilder = (function ($, baseUrl) {
     function initDataActions()
     {
         $(document).on('click.sa.formBuilder', '[data-remove]', function () {
-            var $this = $(this), $remove = $this.closest($this.data('remove')), $form = $remove.closest('form');
+            var $this = $(this), $remove = $this.closest($this.data('remove')), $form = $remove.closest('form'),
+                $link = $remove.closest('.accordion').find('.add-btn').first();
 
             $remove.find('.form-control').each(function () {
                 $form.yiiActiveForm('remove', $(this).prop('id'));
             });
             $remove.remove();
+
+            var url = new URL($link.get(0).href), counter = Math.max(0, url.searchParams.get('counter') - 1);
+            url.searchParams.set('counter', counter);
+            $link.attr('href', url.href);
         });
         $(document).on('change.sa.formBuilder', '[data-show]', function () {
             var $this = $(this), val = $this.val(), fields = $(this).data('show');
@@ -103,6 +162,13 @@ window.sa.formBuilder = (function ($, baseUrl) {
         });
     }
 
+    function initValidators()
+    {
+        $(document).on('change.sa.formBuilder', '.sa-formbuilder-validator-class .form-control', function () {
+            pub.initValidator.apply(this);
+        });
+    }
+
     function bindPjaxEvents()
     {
         $(document).on('pjax:end', function (evt, xhr, options) {
@@ -117,8 +183,8 @@ window.sa.formBuilder = (function ($, baseUrl) {
     }
 
     return pub;
-})(window.jQuery, window.formBuilderBaseUrl);
+})(jQuery, JSONEditor/*, formBuilderBaseUrl */);
 
-window.jQuery(function () {
-    window.yii.initModule(window.sa.formBuilder);
+jQuery(function () {
+    yii.initModule(window.sa.formBuilder);
 });

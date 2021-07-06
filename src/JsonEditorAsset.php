@@ -19,7 +19,7 @@ class JsonEditorAsset extends AssetBundle
      * @inheritdoc
      */
     public $js = [
-        'dist/jsoneditor.js'
+        'dist/nonmin/jsoneditor.js'
     ];
 
     /**
@@ -28,6 +28,7 @@ class JsonEditorAsset extends AssetBundle
     public $publishOptions = [
         'only' => [
             'dist/*',
+            'dist/nonmin/*',
             'src/*'
         ]
     ];

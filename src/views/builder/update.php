@@ -17,7 +17,7 @@ use yii\bootstrap4\Html;
 
 FormBuilderAsset::register($this);
 
-$this->title = Yii::t('simialbi/formbuilder', 'Create form');
+$this->title = Yii::t('simialbi/formbuilder', 'Update form');
 $this->params['breadcrumbs'] = [
     [
         'label' => Yii::t('simialbi/formbuilder', 'My forms'),
@@ -26,9 +26,9 @@ $this->params['breadcrumbs'] = [
     $this->title
 ];
 ?>
-<div class="sa-formbuilder-form-create">
+<div class="sa-formbuilder-form-update">
     <?php $form = ActiveForm::begin([
-        'id' => 'createFormForm'
+        'id' => 'updateFormForm'
     ]); ?>
 
     <?= $this->render('_form', [
@@ -45,7 +45,7 @@ $this->params['breadcrumbs'] = [
 
     <div class="form-row mt-4">
         <div class="col-12 form-group d-flex justify-content-end">
-            <?= Html::submitButton(FAS::i('save') . ' ' . Yii::t('simialbi/formbuilder', 'Create form'), [
+            <?= Html::submitButton(FAS::i('save') . ' ' . Yii::t('simialbi/formbuilder', 'Update form'), [
                 'class' => ['btn', 'btn-primary']
             ]); ?>
         </div>
