@@ -65,6 +65,40 @@
     }
 
     // stylelint-enable no-duplicate-selectors
+
+    select {
+        &, &.form-control {
+            ~ .select2 {
+                .select2-selection--single, .select2-selection--multiple {
+                    height: $form-floating-height;
+                    padding-bottom: $form-floating-input-padding-b;
+                    padding-top: $form-floating-input-padding-t;
+                }
+
+                .select2-selection--multiple {
+                    .select2-selection__choice {
+                        margin-top: 0;
+
+                        &:first-of-type {
+                            margin-left: $form-floating-padding-x;
+                        }
+                    }
+                }
+
+                ~ label {
+                    opacity: 1;
+                    transform: none;
+                }
+            }
+
+            &.selected ~ .select2 ~ label,
+            ~ .select2.select2-container--open ~ label,
+            ~ .select2.select2-container--focus ~ label {
+                opacity: $form-floating-label-opacity;
+                transform: $form-floating-label-transform;
+            }
+        }
+    }
 }
 
 .row {

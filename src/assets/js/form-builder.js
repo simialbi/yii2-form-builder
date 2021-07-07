@@ -55,7 +55,7 @@ window.sa.formBuilder = (function ($, JSONEditor) {
             }
 
             if (typeof initValue === 'object') {
-                $.each(schema.properties, function (key, value) {
+                $.each(schema.properties, function (key) {
                     if (!initValue.hasOwnProperty(key)) {
                         initValue[key] = '';
                     }
@@ -159,6 +159,48 @@ window.sa.formBuilder = (function ($, JSONEditor) {
                 $field.append('<option value="' + key + '">' + val + '</option>');
             });
             $field.trigger('change');
+        });
+        $(document).on('change.sa.formBuilder', '.sa-formbuilder-field-type .form-control', function () {
+            var $this = $(this),
+                $options = $(this).closest('.sa-formbuilder-field').find('.sa-formbuilder-field-options .form-control'),
+                options = {},
+                editor = window[$options.data('jsonEditorName')];
+            switch ($this.val()) {
+                case 'select':
+                    options.data = {key1: 'val1', key2: 'val2'};
+                    options.theme = 'krajee-bs4';
+                    options.bsVersion = 4;
+                    options.options = {placeholder: '', multiple: false};
+                    options.pluginOptions = {allowClear: true};
+                    break;
+                case 'date':
+                    options.clientOptions = {
+                        format: 'd.m.Y',
+                        large: true,
+                        largeDefault: false,
+                        largeOnly: false
+                    };
+                    break;
+                case 'textarea':
+                    options.rows = 5;
+                    break;
+                case 'int':
+                    options.type = 'number';
+                    options.step = 1;
+                    break;
+                case 'double':
+                    options.type = 'number';
+                    options.step = .1;
+                    break;
+                case 'time':
+                    options.autoSwitch = true;
+                    options.clientOptions = {
+                        format: 'HH:mm'
+                    };
+                    break;
+            }
+
+            editor.set(options);
         });
     }
 

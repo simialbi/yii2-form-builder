@@ -3,6 +3,7 @@
 use kartik\select2\Select2;
 use rmrevin\yii\fontawesome\FAS;
 use simialbi\yii2\formbuilder\models\Field;
+use simialbi\yii2\formbuilder\widgets\JsonEditor;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\helpers\Url;
@@ -69,7 +70,7 @@ use yii\widgets\Pjax;
                 <div class="form-row">
                     <?= $form->field($model, "[$secI][$i]type", [
                         'options' => [
-                            'class' => ['form-group', 'col-12', 'col-lg-4']
+                            'class' => ['form-group', 'sa-formbuilder-field-type', 'col-12', 'col-lg-4']
                         ]
                     ])->widget(Select2::class, [
                         'data' => $fieldTypes,
@@ -81,9 +82,30 @@ use yii\widgets\Pjax;
                         'options' => [
                             'data' => [
                                 'show' => [
-                                    "#sa-formbuilder-field-$secI-$i-multiple"
+                                    "#sa-formbuilder-field-$secI-$i-multiple",
+                                    "#sa-formbuilder-field-$secI-$i-format"
                                 ]
                             ]
+                        ]
+                    ]); ?>
+                    <?= $form->field($model, "[$secI][$i]format", [
+                        'options' => [
+                            'id' => "sa-formbuilder-field-$secI-$i-format",
+                            'class' => ['form-group', 'col-12', 'col-lg-8'],
+                            'data' => [
+                                'show-condition' => [Field::TYPE_STRING]
+                            ]
+                        ]
+                    ])->textInput(); ?>
+                </div>
+                <div class="form-row">
+                    <?= $form->field($model, "[$secI][$i]options", [
+                        'options' => [
+                            'class' => ['form-group', 'sa-formbuilder-field-options', 'col-12'],
+                        ]
+                    ])->widget(JsonEditor::class, [
+                        'clientOptions' => [
+                            'modes' => ['tree']
                         ]
                     ]); ?>
                 </div>

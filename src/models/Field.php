@@ -22,6 +22,8 @@ use yii\db\ActiveRecord;
  * @property string $label
  * @property string $type
  * @property boolean $multiple
+ * @property string $format
+ * @property string|array $options
  * @property string $relation_model
  * @property string $relation_field
  * @property string $relation_display_template
@@ -53,7 +55,7 @@ class Field extends ActiveRecord
     /**
      * {@inheritDoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return '{{%form_builder__field}}';
     }
@@ -61,11 +63,11 @@ class Field extends ActiveRecord
     /**
      * {@inheritDoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['id', 'section_id', 'order'], 'integer'],
-            [['name', 'label'], 'string', 'max' => 255],
+            [['name', 'label', 'format'], 'string', 'max' => 255],
             [
                 'type',
                 'in',
@@ -88,6 +90,7 @@ class Field extends ActiveRecord
             ['relation_field', 'string', 'max' => 255, 'encoding' => 'ASCII'],
             ['relation_model', 'string', 'max' => 512, 'encoding' => 'ASCII'],
             ['relation_display_template', 'string', 'max' => 1024],
+            ['options', 'string'],
 
             [['relation_model', 'relation_field', 'relation_display_template'], 'default'],
 
@@ -101,7 +104,7 @@ class Field extends ActiveRecord
     /**
      * {@inheritDoc}
      */
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'blameable' => [
@@ -124,7 +127,7 @@ class Field extends ActiveRecord
     /**
      * {@inheritDoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => Yii::t('simialbi/formbuilder/models/field', 'Id'),
@@ -132,10 +135,9 @@ class Field extends ActiveRecord
             'name' => Yii::t('simialbi/formbuilder/models/field', 'Name'),
             'label' => Yii::t('simialbi/formbuilder/models/field', 'Label'),
             'type' => Yii::t('simialbi/formbuilder/models/field', 'Type'),
-            'default_value' => Yii::t('simialbi/formbuilder/models/field', 'Default value'),
             'multiple' => Yii::t('simialbi/formbuilder/models/field', 'Multiple'),
-            'min' => Yii::t('simialbi/formbuilder/models/field', 'Min'),
-            'max' => Yii::t('simialbi/formbuilder/models/field', 'Max'),
+            'format' => Yii::t('simialbi/formbuilder/models/field', 'Format'),
+            'options' => Yii::t('simialbi/formbuilder/models/field', 'Options'),
             'relation_model' => Yii::t('simialbi/formbuilder/models/field', 'Relation model'),
             'relation_field' => Yii::t('simialbi/formbuilder/models/field', 'Relation field'),
             'relation_display_template' => Yii::t('simialbi/formbuilder/models/field', 'Relation display template'),
@@ -143,6 +145,19 @@ class Field extends ActiveRecord
             'updated_by' => Yii::t('simialbi/formbuilder/models/field', 'Updated by'),
             'created_at' => Yii::t('simialbi/formbuilder/models/field', 'Created at'),
             'updated_at' => Yii::t('simialbi/formbuilder/models/field', 'Updated at')
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function attributeHints(): array
+    {
+        return [
+            'format' => Yii::t(
+                'simialbi/formbuilder/models/field',
+                'Define a string format for this field. Use <b>a</b> as placeholder for an alpha character and <b>9</b> for a numeric character. Content between <b>[</b> and <b>]</b> is considered as optional user input.'
+            )
         ];
     }
 
