@@ -19,7 +19,7 @@ class SearchForm extends Form
     /**
      * {@inheritDoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             ['id', 'integer'],
@@ -41,7 +41,7 @@ class SearchForm extends Form
     /**
      * {@inheritDoc}
      */
-    public function scenarios()
+    public function scenarios(): array
     {
         return Model::scenarios();
     }
@@ -53,7 +53,7 @@ class SearchForm extends Form
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search(array $params): ActiveDataProvider
     {
         $query = Form::find();
 

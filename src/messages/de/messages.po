@@ -11,12 +11,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 msgctxt "simialbi/formbuilder"
+msgid "Actions"
+msgstr "Aktionen"
+
+msgctxt "simialbi/formbuilder"
+msgid "Add action"
+msgstr "Aktion hinzufügen"
+
+msgctxt "simialbi/formbuilder"
 msgid "Add field"
 msgstr "Feld hinzufügen"
 
 msgctxt "simialbi/formbuilder"
 msgid "Add section"
 msgstr "Abschnitt hinzufügen"
+
+msgctxt "simialbi/formbuilder"
+msgid "Add validator"
+msgstr "Validierung hinzufügen"
 
 msgctxt "simialbi/formbuilder"
 msgid "Create form"
@@ -26,29 +38,41 @@ msgctxt "simialbi/formbuilder"
 msgid "My forms"
 msgstr "Meine Formulare"
 
-msgctxt "simialbi/formbuilder/dependency-operator"
-msgid "Equal"
-msgstr "Gleich"
+msgctxt "simialbi/formbuilder"
+msgid "Send mail"
+msgstr "Mail versenden"
 
-msgctxt "simialbi/formbuilder/dependency-operator"
-msgid "Grater than"
-msgstr "Grösser als"
+msgctxt "simialbi/formbuilder"
+msgid "Save"
+msgstr "Speichern"
 
-msgctxt "simialbi/formbuilder/dependency-operator"
-msgid "Lower than"
-msgstr "Kleiner als"
+msgctxt "simialbi/formbuilder"
+msgid "Generate pdf"
+msgstr "PDF generieren"
 
-msgctxt "simialbi/formbuilder/dependency-operator"
-msgid "Not"
-msgstr "Nicht"
+msgctxt "simialbi/formbuilder"
+msgid "Sections"
+msgstr "Abschnitte"
+
+msgctxt "simialbi/formbuilder"
+msgid "Update form"
+msgstr "Formular bearbeiten"
+
+msgctxt "simialbi/formbuilder/action"
+msgid "Action {action}"
+msgstr "Aktion {action}"
 
 msgctxt "simialbi/formbuilder/field"
 msgid "Dependency settings"
-msgstr "Abhängigkeitsregeln"
+msgstr "@@Abhängigkeitsregeln@@"
 
 msgctxt "simialbi/formbuilder/field"
 msgid "Relation settings"
 msgstr "Verknüpfungseinstellungen"
+
+msgctxt "simialbi/formbuilder/field"
+msgid "Validators"
+msgstr "Validierungen"
 
 msgctxt "simialbi/formbuilder/field-type"
 msgid "Checkbox"
@@ -77,6 +101,10 @@ msgstr "Ganzzahl"
 msgctxt "simialbi/formbuilder/field-type"
 msgid "Radio"
 msgstr "Radio"
+
+msgctxt "simialbi/formbuilder/field-type"
+msgid "Rich text"
+msgstr "Rich text"
 
 msgctxt "simialbi/formbuilder/field-type"
 msgid "Select"
@@ -142,6 +170,26 @@ msgctxt "simialbi/formbuilder/model/Form"
 msgid "Updated by"
 msgstr "Bearbeitet von"
 
+msgctxt "simialbi/formbuilder/models/action"
+msgid "Class"
+msgstr "Klasse"
+
+msgctxt "simialbi/formbuilder/models/action"
+msgid "Id"
+msgstr "Id"
+
+msgctxt "simialbi/formbuilder/models/action"
+msgid "Name"
+msgstr "Name"
+
+msgctxt "simialbi/formbuilder/models/action"
+msgid "Properties"
+msgstr "Eigenschaften"
+
+msgctxt "simialbi/formbuilder/models/action"
+msgid "Translation category"
+msgstr "Übersetzungskategorie"
+
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Created at"
 msgstr "Erstellt am"
@@ -152,15 +200,23 @@ msgstr "Erstellt von"
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Default value"
-msgstr "Standard Wert"
+msgstr "@@Standard Wert@@"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Define a string format for this field. Use <b>a</b> as placeholder for an alpha character and <b>9</b> for a numeric character. Content between <b>[</b> and <b>]</b> is considered as optional user input."
+msgstr "Definieren Sie ein Format für dieses Feld. Verwenden Sie dabei <b>a</b> als Platzhalter für einen Buchstaben und <b>9</b> für eine Zahl. Inhalt zwischen <b>[</b> und <b>]</b> wird als optional angesehen."
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Dependency"
-msgstr "Abhängigkeit"
+msgstr "@@Abhängigkeit@@"
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Dependency operator"
-msgstr "Abhängigkeitsoperator"
+msgstr "@@Abhängigkeitsoperator@@"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Format"
+msgstr "Format"
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Id"
@@ -172,11 +228,11 @@ msgstr "Feldname"
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Max"
-msgstr "Maximale Länge"
+msgstr "@@Maximale Länge@@"
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Min"
-msgstr "Minimale Länge"
+msgstr "@@Minimale Länge@@"
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Multiple"
@@ -185,6 +241,10 @@ msgstr "Mehrfachauswahl möglich"
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Name"
 msgstr "Technischer Name"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Options"
+msgstr "Optionen"
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Relation display template"
@@ -200,7 +260,7 @@ msgstr "Beziehung Modell"
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Required"
-msgstr "Pflichtfeld"
+msgstr "@@Pflichtfeld@@"
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Section"
@@ -218,6 +278,22 @@ msgctxt "simialbi/formbuilder/models/field"
 msgid "Updated by"
 msgstr "Bearbeitet von"
 
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Width"
+msgstr "Breite"
+
+msgctxt "simialbi/formbuilder/models/form-action"
+msgid "Action"
+msgstr "Aktion"
+
+msgctxt "simialbi/formbuilder/models/form-action"
+msgid "Configuration"
+msgstr "Konfiguration"
+
+msgctxt "simialbi/formbuilder/models/form-action"
+msgid "Form"
+msgstr "Formular"
+
 msgctxt "simialbi/formbuilder/models/section"
 msgid "Created at"
 msgstr "Erstellt am"
@@ -228,7 +304,7 @@ msgstr "Erstellt von"
 
 msgctxt "simialbi/formbuilder/models/section"
 msgid "Default number of cols"
-msgstr "Standardbreite des Felds"
+msgstr "Anzahl Felder pro Zeile"
 
 msgctxt "simialbi/formbuilder/models/section"
 msgid "Form"

@@ -6,6 +6,7 @@
 
 namespace simialbi\yii2\formbuilder\models;
 
+use simialbi\yii2\formbuilder\behaviors\ConfigurableBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -26,7 +27,7 @@ class Validator extends ActiveRecord
     /**
      * {@inheritDoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return '{{%form_builder__validator}}';
     }
@@ -34,7 +35,7 @@ class Validator extends ActiveRecord
     /**
      * {@inheritDoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['id', 'field_id'], 'integer'],
@@ -43,6 +44,21 @@ class Validator extends ActiveRecord
             ['configuration', 'string'],
 
             [['name', 'field_id', 'class'], 'required']
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function behaviors(): array
+    {
+        return [
+            'configurable' => [
+                'class' => ConfigurableBehavior::class,
+                'attributes' => [
+                    self::EVENT_BEFORE_VALIDATE => 'configuration'
+                ]
+            ]
         ];
     }
 

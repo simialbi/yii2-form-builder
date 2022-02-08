@@ -10,13 +10,51 @@ use yii\widgets\MaskedInput;
 
 /** @var $this \yii\web\View */
 /** @var $form \yii\bootstrap4\ActiveForm */
+/** @var $section \simialbi\yii2\formbuilder\models\Section */
 /** @var $model \yii\base\DynamicModel */
 /** @var $field \simialbi\yii2\formbuilder\models\Field */
 /** @var $options array */
+/** @var $relations \yii\db\ActiveRecord[] */
 
 if ($field->relation_model) {
-    $method = 'textInput';
-    $params = [];
+    if (isset($relations[$field->relation_model])) {
+        $data = [];
+        /** @var \yii\db\ActiveRecord $relation */
+        foreach ($relations[$field->relation_model] as $relation) {
+            $data[$relation->getAttribute($field->relation_field)] = preg_replace_callback('#\{([^\}]+)\}#', function ($matches) use ($relation) {
+                return $relation->hasAttribute($matches[1]) ? $relation->getAttribute($matches[1]) : '';
+            }, $field->relation_display_template);
+        }
+        asort($data);
+        $method = 'widget';
+        $params = [Select2::class, [
+            'data' => $data,
+            'theme' => Select2::THEME_KRAJEE_BS4,
+            'bsVersion' => 4,
+            'options' => [
+                'placeholder' => '',
+                'multiple' => false
+            ],
+            'pluginOptions' => [
+                'allowClear' => !$model->isAttributeRequired($field->name)
+            ]
+        ]];
+        $id = Html::getInputId($model, $field->name);
+        $js = <<<JS
+jQuery('#$id').on({
+    'select2:select': function () {
+        jQuery(this).addClass('selected');
+    },
+    'select2:unselect': function () {
+        jQuery(this).removeClass('selected');
+    }
+});
+JS;
+        $this->registerJs($js);
+    } else {
+        $method = 'textInput';
+        $params = [];
+    }
 } else {
     $params = [Json::decode($field->options)];
 
@@ -81,7 +119,12 @@ JS;
             break;
     }
 }
-Html::addCssClass($options, ['form-group', 'col']);
+if (!empty($field->number_of_cols)) {
+    Html::addCssClass($options, ['col-12', 'col-lg-' . $field->number_of_cols]);
+} else {
+    Html::addCssClass($options, ['col-12', 'col-lg-' . floor(12 / $section->default_number_of_cols)]);
+}
+Html::addCssClass($options, 'form-group');
 $fld = $form->field($model, $field->name, [
     'options' => $options
 ]);

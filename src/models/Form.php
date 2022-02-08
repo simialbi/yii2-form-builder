@@ -26,6 +26,8 @@ use yii\db\ActiveRecord;
  * @property integer|string $updated_at
  *
  * @property-read Section[] $sections
+ * @property-read FormAction[] $formActions
+ * @property-read Action[] $actions
  * @property-read Field[] $fields
  */
 class Form extends ActiveRecord
@@ -38,7 +40,7 @@ class Form extends ActiveRecord
     /**
      * {@inheritDoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return '{{%form_builder__form}}';
     }
@@ -46,7 +48,7 @@ class Form extends ActiveRecord
     /**
      * {@inheritDoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             ['id', 'integer'],
@@ -73,7 +75,7 @@ class Form extends ActiveRecord
     /**
      * {@inheritDoc}
      */
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'blameable' => [
@@ -96,7 +98,7 @@ class Form extends ActiveRecord
     /**
      * {@inheritDoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => Yii::t('simialbi/formbuilder/model/Form', 'Id'),
@@ -126,5 +128,23 @@ class Form extends ActiveRecord
     public function getFields(): ActiveQuery
     {
         return $this->hasMany(Field::class, ['section_id' => 'id'])->via('sections');
+    }
+
+    /**
+     * Get associated form actions
+     * @return ActiveQuery
+     */
+    public function getFormActions(): ActiveQuery
+    {
+        return $this->hasMany(FormAction::class, ['form_id' => 'id']);
+    }
+
+    /**
+     * Get associated actions
+     * @return ActiveQuery
+     */
+    public function getActions(): ActiveQuery
+    {
+        return $this->hasMany(Action::class, ['id' => 'action_id'])->via('formActions');
     }
 }

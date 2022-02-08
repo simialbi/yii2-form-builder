@@ -70,7 +70,7 @@ use yii\widgets\Pjax;
                 <div class="form-row">
                     <?= $form->field($model, "[$secI][$i]type", [
                         'options' => [
-                            'class' => ['form-group', 'sa-formbuilder-field-type', 'col-12', 'col-lg-4']
+                            'class' => ['form-group', 'sa-formbuilder-field-type', 'col-6', 'col-lg-4']
                         ]
                     ])->widget(Select2::class, [
                         'data' => $fieldTypes,
@@ -82,16 +82,34 @@ use yii\widgets\Pjax;
                         'options' => [
                             'data' => [
                                 'show' => [
-                                    "#sa-formbuilder-field-$secI-$i-multiple",
                                     "#sa-formbuilder-field-$secI-$i-format"
                                 ]
                             ]
                         ]
                     ]); ?>
+                    <?= $form->field($model, "[$secI][$i]number_of_cols", [
+                        'options' => [
+                            'class' => ['form-group', 'col-6', 'col-lg-2']
+                        ]
+                    ])->dropdownList([
+                        '' => 'auto',
+                        1 => '8.33%',
+                        2 => '16.66%',
+                        3 => '25%',
+                        4 => '33.33%',
+                        5 => '41.66%',
+                        6 => '50%',
+                        7 => '58.33%',
+                        8 => '66.66%',
+                        9 => '75%',
+                        10 => '83.33%',
+                        11 => '91.66%',
+                        12 => '100%'
+                    ]); ?>
                     <?= $form->field($model, "[$secI][$i]format", [
                         'options' => [
                             'id' => "sa-formbuilder-field-$secI-$i-format",
-                            'class' => ['form-group', 'col-12', 'col-lg-8'],
+                            'class' => ['form-group', 'col-12', 'col-lg-6'],
                             'data' => [
                                 'show-condition' => [Field::TYPE_STRING]
                             ]
@@ -108,19 +126,6 @@ use yii\widgets\Pjax;
                             'modes' => ['tree']
                         ]
                     ]); ?>
-                </div>
-                <div class="form-row">
-                    <div class="col-12 d-flex">
-                        <?= $form->field($model, "[$secI][$i]multiple", [
-                            'options' => [
-                                'id' => "sa-formbuilder-field-$secI-$i-multiple",
-                                'class' => ['form-group'],
-                                'data' => [
-                                    'show-condition' => [Field::TYPE_FILE, Field::TYPE_SELECT]
-                                ]
-                            ]
-                        ])->checkbox()->inline(true); ?>
-                    </div>
                 </div>
                 <fieldset class="mt-3">
                     <legend><?= Yii::t('simialbi/formbuilder/field', 'Validators'); ?></legend>

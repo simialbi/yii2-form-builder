@@ -8,12 +8,15 @@ use yii\bootstrap4\Html;
 /** @var $this \yii\web\View */
 /** @var $model \simialbi\yii2\formbuilder\models\Form */
 /** @var $sections \simialbi\yii2\formbuilder\models\Section[] */
+/** @var $actions \simialbi\yii2\formbuilder\models\FormAction[] */
 /** @var $languages array */
 /** @var $layouts array */
 /** @var $fieldTypes array */
 /** @var $relationClasses array */
 /* @var $validators array */
 /** @var $validatorOptions array */
+/** @var $allActions array */
+/** @var $actionOptions array */
 
 FormBuilderAsset::register($this);
 
@@ -35,12 +38,15 @@ $this->params['breadcrumbs'] = [
         'form' => $form,
         'model' => $model,
         'sections' => $sections,
+        'actions' => $actions,
         'languages' => $languages,
         'layouts' => $layouts,
         'fieldTypes' => $fieldTypes,
         'relationClasses' => $relationClasses,
         'validators' => $validators,
-        'validatorOptions' => $validatorOptions
+        'validatorOptions' => $validatorOptions,
+        'allActions' => $allActions,
+        'actionOptions' => $actionOptions
     ]); ?>
 
     <div class="form-row mt-4">

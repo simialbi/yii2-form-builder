@@ -6,6 +6,7 @@ use simialbi\yii2\formbuilder\FloatingFormAsset;
 /** @var $form \yii\bootstrap4\ActiveForm */
 /** @var $model \yii\base\DynamicModel */
 /** @var $sections \simialbi\yii2\formbuilder\models\Section[] */
+/** @var $relations \yii\db\ActiveRecord[] */
 
 /**
  * @param \yii\base\DynamicModel $model
@@ -36,13 +37,11 @@ FloatingFormAsset::register($this);
                     <?= $this->render('_field', [
                         'field' => $field,
                         'form' => $form,
+                        'section' => $section,
                         'model' => $model,
-                        'options' => ['class' => 'form-floating']
+                        'options' => ['class' => 'form-floating'],
+                        'relations' => $relations
                     ]); ?>
-                    <?php if (($i + 1) % $section->default_number_of_cols === 0): ?>
-            </div>
-            <div class="form-row">
-                    <?php endif; ?>
                 <?php endfor; ?>
             </div>
         </div>

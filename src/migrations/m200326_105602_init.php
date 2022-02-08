@@ -61,23 +61,11 @@ class m200326_105602_init extends Migration
             'created_at' => $this->integer()->unsigned()->notNull(),
             'updated_at' => $this->integer()->unsigned()->notNull()
         ]);
-        $this->createTable('{{%form_builder__relations}}', [
-            'model' => 'VARCHAR(512) CHARSET ascii COLLATE ascii_bin NOT NULL',
-            'language' => $this->string(5)->notNull()->defaultValue('en-US'),
-            'label' => $this->string(255)->notNull(),
-            'PRIMARY KEY ([[model]])'
-        ]);
 
         $this->createIndex(
             '{{%form_builder__form-name-language}}',
             '{{%form_builder__form}}',
             ['name', 'language'],
-            true
-        );
-        $this->createIndex(
-            '{{%form_builder__relations-model-language}}',
-            '{{%form_builder__relations}}',
-            ['model', 'language'],
             true
         );
 
@@ -108,15 +96,6 @@ class m200326_105602_init extends Migration
             'SET NULL',
             'CASCADE'
         );
-        $this->addForeignKey(
-            '{{%form_builder__field_ibfk_3}}',
-            '{{%form_builder__field}}',
-            'relation_model',
-            '{{%form_builder__relations}}',
-            'model',
-            'RESTRICT',
-            'CASCADE'
-        );
     }
 
     /**
@@ -124,12 +103,10 @@ class m200326_105602_init extends Migration
      */
     public function safeDown()
     {
-        $this->dropForeignKey('{{%form_builder__field_ibfk_3}}', '{{%form_builder__field}}');
         $this->dropForeignKey('{{%form_builder__field_ibfk_2}}', '{{%form_builder__field}}');
         $this->dropForeignKey('{{%form_builder__field_ibfk_1}}', '{{%form_builder__field}}');
         $this->dropForeignKey('{{%form_builder__section_ibfk_1}}', '{{%form_builder__section}}');
 
-        $this->dropTable('{{%form_builder__relations}}');
         $this->dropTable('{{%form_builder__field}}');
         $this->dropTable('{{%form_builder__section}}');
         $this->dropTable('{{%form_builder__form}}');

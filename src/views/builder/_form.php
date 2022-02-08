@@ -9,12 +9,15 @@ use yii\widgets\Pjax;
 /** @var $form \yii\bootstrap4\ActiveForm */
 /** @var $model \simialbi\yii2\formbuilder\models\Form */
 /** @var $sections \simialbi\yii2\formbuilder\models\Section[] */
+/** @var $actions \simialbi\yii2\formbuilder\models\FormAction[] */
 /** @var $languages array */
 /** @var $layouts array */
 /** @var $fieldTypes array */
 /** @var $relationClasses array */
 /** @var $validators array */
 /** @var $validatorOptions array */
+/** @var $allActions array */
+/** @var $actionOptions array */
 
 echo $form->errorSummary($model);
 ?>
@@ -52,31 +55,63 @@ echo $form->errorSummary($model);
         ]
     ]); ?>
 </div>
-
-<div id="sa-formbuilder-sections" class="accordion">
-    <?php Pjax::begin([
-        'id' => 'sa-formbuilder-section-pjax',
-        'options' => ['class' => ['mb-3']],
-        'enablePushState' => false,
-        'clientOptions' => [
-            'skipOuterContainers' => true
-        ],
-        'timeout' => 0
-    ]); ?>
-    <a href="<?= Url::to(['builder/add-section', 'counter' => count($sections)]); ?>" class="btn btn-primary btn-sm add-btn">
-        <?= FAS::i('plus'); ?> <?= Yii::t('simialbi/formbuilder', 'Add section'); ?>
-    </a>
-    <?php Pjax::end(); ?>
-
-    <?php for ($i = 0; $i < count($sections); $i++): ?>
-        <?= $this->render('_section', [
-            'form' => $form,
-            'section' => $sections[$i],
-            'i' => $i,
-            'fieldTypes' => $fieldTypes,
-            'relationClasses' => $relationClasses,
-            'validators' => $validators,
-            'validatorOptions' => $validatorOptions
+<fieldset>
+    <legend><?= Yii::t('simialbi/formbuilder', 'Sections'); ?></legend>
+    <div id="sa-formbuilder-sections" class="accordion">
+        <?php Pjax::begin([
+            'id' => 'sa-formbuilder-section-pjax',
+            'options' => ['class' => ['mb-3']],
+            'enablePushState' => false,
+            'clientOptions' => [
+                'skipOuterContainers' => true
+            ],
+            'timeout' => 0
         ]); ?>
-    <?php endfor; ?>
-</div>
+        <a href="<?= Url::to(['builder/add-section', 'counter' => count($sections)]); ?>"
+           class="btn btn-primary btn-sm add-btn">
+            <?= FAS::i('plus'); ?> <?= Yii::t('simialbi/formbuilder', 'Add section'); ?>
+        </a>
+        <?php Pjax::end(); ?>
+
+        <?php for ($i = 0; $i < count($sections); $i++): ?>
+            <?= $this->render('_section', [
+                'form' => $form,
+                'section' => $sections[$i],
+                'i' => $i,
+                'fieldTypes' => $fieldTypes,
+                'relationClasses' => $relationClasses,
+                'validators' => $validators,
+                'validatorOptions' => $validatorOptions
+            ]); ?>
+        <?php endfor; ?>
+    </div>
+</fieldset>
+
+<fieldset>
+    <legend><?= Yii::t('simialbi/formbuilder', 'Actions'); ?></legend>
+    <div id="sa-formbuilder-actions" class="accordion">
+        <?php Pjax::begin([
+            'id' => 'sa-formbuilder-action-pjax',
+            'options' => ['class' => ['mb-3']],
+            'enablePushState' => false,
+            'clientOptions' => [
+                'skipOuterContainers' => true
+            ],
+            'timeout' => 0
+        ]); ?>
+        <a href="<?= Url::to(['builder/add-action', 'counter' => 0]); ?>" class="btn btn-primary btn-sm btn-add">
+            <?= FAS::i('plus'); ?> <?= Yii::t('simialbi/formbuilder', 'Add action'); ?>
+        </a>
+        <?php Pjax::end(); ?>
+
+        <?php for ($i = 0; $i < count($actions); $i++): ?>
+            <?= $this->render('_action', [
+                'form' => $form,
+                'i' => $i,
+                'model' => $actions[$i],
+                'actions' => $allActions,
+                'actionOptions' => $actionOptions,
+            ]); ?>
+        <?php endfor; ?>
+    </div>
+</fieldset>

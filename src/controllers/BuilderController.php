@@ -7,13 +7,16 @@
 namespace simialbi\yii2\formbuilder\controllers;
 
 use cebe\markdown\MarkdownExtra;
+use simialbi\yii2\formbuilder\models\Action;
 use simialbi\yii2\formbuilder\models\Field;
 use simialbi\yii2\formbuilder\models\Form;
+use simialbi\yii2\formbuilder\models\FormAction;
 use simialbi\yii2\formbuilder\models\SearchForm;
 use simialbi\yii2\formbuilder\models\Section;
 use simialbi\yii2\formbuilder\models\Validator;
 use simialbi\yii2\formbuilder\Module;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Inflector;
 use yii\helpers\Json;
 use yii\web\Controller;
@@ -66,10 +69,12 @@ class BuilderController extends Controller
         $sections[0]->default_number_of_cols = 2;
 
         if ($model->load(Yii::$app->request->post())) {
-            $saved = $this->saveForm($model);
+            $this->saveForm($model);
 
             return $this->redirect(['index']);
         }
+
+        $actions = Action::find()->all();
 
         return $this->render('create', [
             'model' => $model,
@@ -79,7 +84,12 @@ class BuilderController extends Controller
             'fieldTypes' => Module::getFieldTypes(),
             'relationClasses' => $this->module->relationClasses,
             'validators' => $this->module->validators,
-            'validatorOptions' => $this->getValidatorOptions()
+            'validatorOptions' => $this->getValidatorOptions(),
+            'allActions' => ArrayHelper::map($actions, 'id', 'translatedName'),
+            'actionOptions' => ArrayHelper::map($actions, 'id', function ($action) {
+                /** @var \simialbi\yii2\formbuilder\models\Action $action */
+                return Json::decode($action->properties);
+            })
         ]);
     }
 
@@ -101,15 +111,23 @@ class BuilderController extends Controller
             return $this->redirect(['index']);
         }
 
+        $actions = Action::find()->all();
+
         return $this->render('update', [
             'model' => $model,
             'sections' => $model->sections,
+            'actions' => $model->formActions,
             'languages' => $this->module->languages,
             'layouts' => Module::getFormLayouts(),
             'fieldTypes' => Module::getFieldTypes(),
             'relationClasses' => $this->module->relationClasses,
             'validators' => $this->module->validators,
-            'validatorOptions' => $this->getValidatorOptions()
+            'validatorOptions' => $this->getValidatorOptions(),
+            'allActions' => ArrayHelper::map($actions, 'id', 'translatedName'),
+            'actionOptions' => ArrayHelper::map($actions, 'id', function ($action) {
+                /** @var \simialbi\yii2\formbuilder\models\Action $action */
+                return Json::decode($action->properties);
+            })
         ]);
     }
 
@@ -180,6 +198,29 @@ class BuilderController extends Controller
             'counter' => $counter,
             'validators' => $this->module->validators,
             'validatorOptions' => $this->getValidatorOptions()
+        ]);
+    }
+
+    /**
+     * Add an action to form
+     * @param int $counter
+     * @return string
+     * @throws \Exception
+     */
+    public function actionAddAction(int $counter = 0): string
+    {
+        $model = new FormAction();
+
+        $actions = Action::find()->all();
+
+        return $this->renderAjax('add-action', [
+            'model' => $model,
+            'counter' => $counter,
+            'actions' => ArrayHelper::map($actions, 'id', 'translatedName'),
+            'actionOptions' => ArrayHelper::map($actions, 'id', function ($action) {
+                /** @var \simialbi\yii2\formbuilder\models\Action $action */
+                return Json::decode($action->properties);
+            })
         ]);
     }
 
@@ -286,6 +327,7 @@ class BuilderController extends Controller
         $sections = Yii::$app->request->post('Section', []);
         $fields = Yii::$app->request->post('Field', []);
         $validators = Yii::$app->request->post('Validator', []);
+        $actions = Yii::$app->request->post('FormAction', []);
 
         $transaction = Yii::$app->db->beginTransaction();
         if ($model->save()) {
@@ -305,19 +347,6 @@ class BuilderController extends Controller
                                             : new Validator();
                                         if ($validator->load($validators[$i][$k][$l], '')) {
                                             $validator->field_id = $field->id;
-                                            if (is_array($validator->configuration)) {
-                                                $config = $validator->configuration;
-                                                foreach ($config as $key => $value) {
-                                                    if ($value === '') {
-                                                        unset($config[$key]);
-                                                    } elseif ($value === 'off') {
-                                                        $config[$key] = false;
-                                                    } elseif ($value === 'on') {
-                                                        $config[$key] = true;
-                                                    }
-                                                }
-                                                $validator->configuration = Json::encode($config);
-                                            }
                                             if (!$validator->save()) {
                                                 $transaction->rollBack();
                                                 var_dump($validator->errors);
@@ -335,6 +364,18 @@ class BuilderController extends Controller
                     } else {
                         $transaction->rollBack();
                         var_dump($section->errors);
+                        exit;
+                    }
+                }
+            }
+            for ($i = 0; $i < count($actions); $i++) {
+                $action = FormAction::findOne(['form_id' => $model->id, 'action_id' => $actions[$i]['action_id']]) ?? new FormAction();
+                if ($action->load($actions[$i], '')) {
+                    $action->form_id = $model->id;
+
+                    if (!$action->save()) {
+                        $transaction->rollBack();
+                        var_dump($action->errors);
                         exit;
                     }
                 }

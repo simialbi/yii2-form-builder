@@ -3,6 +3,7 @@ window.sa = {};
 window.sa.formBuilder = (function ($, JSONEditor) {
     var attributes = null;
     var validators = null;
+    var actions = null;
     var editors = {};
 
     var pub = {
@@ -17,6 +18,7 @@ window.sa.formBuilder = (function ($, JSONEditor) {
             initDataActions();
             initFields();
             initValidators();
+            initActions();
             bindPjaxEvents();
         },
         /**
@@ -32,6 +34,46 @@ window.sa.formBuilder = (function ($, JSONEditor) {
          */
         setValidators: function (validates) {
             validators = validates;
+        },
+
+        /**
+         * Set actions
+         * @param {Object} acts
+         */
+        setActions: function (acts) {
+            actions = acts;
+        },
+
+        /**
+         * Initialize an action form
+         * @param initValue
+         */
+        initAction: function (initValue) {
+            var $this = $(this), $form = $($this.data('container')), schema = actions[$this.val()],
+                id = $this.prop('id'), formName = $this.attr('name').replace('action_id', 'configuration');
+            var options = {
+                disable_edit_json: true,
+                disable_properties: true,
+                form_name_root: formName,
+                schema: schema,
+                theme: 'bootstrap4',
+                use_default_values: false
+            };
+
+            if (editors[id] && editors[id].destroy) {
+                editors[id].destroy();
+            }
+
+            if (typeof initValue === 'object' && !$.isArray(initValue)) {
+                $.each(schema.properties, function (key) {
+                    if (!initValue.hasOwnProperty(key)) {
+                        initValue[key] = '';
+                    }
+                });
+                options.startval = initValue;
+            }
+
+            editors[id] = new JSONEditor($form.get(0), options);
         },
 
         /**
@@ -54,7 +96,7 @@ window.sa.formBuilder = (function ($, JSONEditor) {
                 editors[id].destroy();
             }
 
-            if (typeof initValue === 'object') {
+            if (typeof initValue === 'object' && !$.isArray(initValue)) {
                 $.each(schema.properties, function (key) {
                     if (!initValue.hasOwnProperty(key)) {
                         initValue[key] = '';
@@ -163,14 +205,19 @@ window.sa.formBuilder = (function ($, JSONEditor) {
         $(document).on('change.sa.formBuilder', '.sa-formbuilder-field-type .form-control', function () {
             var $this = $(this),
                 $options = $(this).closest('.sa-formbuilder-field').find('.sa-formbuilder-field-options .form-control'),
-                options = {},
-                editor = window[$options.data('jsonEditorName')];
+                options = {}, editor = window[$options.data('jsonEditorName')];
             switch ($this.val()) {
                 case 'select':
-                    options.data = {key1: 'val1', key2: 'val2'};
+                    options.data = {
+                        key1: 'val1',
+                        key2: 'val2'
+                    };
                     options.theme = 'krajee-bs4';
                     options.bsVersion = 4;
-                    options.options = {placeholder: '', multiple: false};
+                    options.options = {
+                        placeholder: '',
+                        multiple: false
+                    };
                     options.pluginOptions = {allowClear: true};
                     break;
                 case 'date':
@@ -194,6 +241,7 @@ window.sa.formBuilder = (function ($, JSONEditor) {
                     break;
                 case 'time':
                     options.autoSwitch = true;
+                    options.setCurrentTime = false;
                     options.clientOptions = {
                         format: 'HH:mm'
                     };
@@ -208,6 +256,13 @@ window.sa.formBuilder = (function ($, JSONEditor) {
     {
         $(document).on('change.sa.formBuilder', '.sa-formbuilder-validator-class .form-control', function () {
             pub.initValidator.apply(this);
+        });
+    }
+
+    function initActions()
+    {
+        $(document).on('change.sa.formBuilder', '.sa-formbuilder-action-id .form-control', function () {
+            pub.initAction.apply(this);
         });
     }
 

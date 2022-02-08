@@ -21,8 +21,8 @@ use yii\db\ActiveRecord;
  * @property string $name
  * @property string $label
  * @property string $type
- * @property boolean $multiple
  * @property string $format
+ * @property integer|null $number_of_cols
  * @property string|array $options
  * @property string $relation_model
  * @property string $relation_field
@@ -66,7 +66,7 @@ class Field extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['id', 'section_id', 'order'], 'integer'],
+            [['id', 'section_id', 'order', 'number_of_cols'], 'integer'],
             [['name', 'label', 'format'], 'string', 'max' => 255],
             [
                 'type',
@@ -86,18 +86,16 @@ class Field extends ActiveRecord
                     static::TYPE_FILE
                 ]
             ],
-            [['multiple'], 'boolean'],
             ['relation_field', 'string', 'max' => 255, 'encoding' => 'ASCII'],
             ['relation_model', 'string', 'max' => 512, 'encoding' => 'ASCII'],
             ['relation_display_template', 'string', 'max' => 1024],
             ['options', 'string'],
 
-            [['relation_model', 'relation_field', 'relation_display_template'], 'default'],
+            [['relation_model', 'relation_field', 'relation_display_template', 'number_of_cols'], 'default'],
 
             ['type', 'default', 'value' => static::TYPE_STRING],
-            [['multiple'], 'default', 'value' => false],
 
-            [['section_id', 'name', 'type', 'multiple'], 'required']
+            [['section_id', 'name', 'type'], 'required']
         ];
     }
 
@@ -137,6 +135,7 @@ class Field extends ActiveRecord
             'type' => Yii::t('simialbi/formbuilder/models/field', 'Type'),
             'multiple' => Yii::t('simialbi/formbuilder/models/field', 'Multiple'),
             'format' => Yii::t('simialbi/formbuilder/models/field', 'Format'),
+            'number_of_cols' => Yii::t('simialbi/formbuilder/models/field', 'Width'),
             'options' => Yii::t('simialbi/formbuilder/models/field', 'Options'),
             'relation_model' => Yii::t('simialbi/formbuilder/models/field', 'Relation model'),
             'relation_field' => Yii::t('simialbi/formbuilder/models/field', 'Relation field'),

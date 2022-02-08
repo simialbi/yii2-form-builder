@@ -34,7 +34,7 @@ class Section extends ActiveRecord
     /**
      * {@inheritDoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return '{{%form_builder__section}}';
     }
@@ -42,7 +42,7 @@ class Section extends ActiveRecord
     /**
      * {@inheritDoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['id', 'form_id', 'order'], 'integer'],
@@ -58,7 +58,7 @@ class Section extends ActiveRecord
     /**
      * {@inheritDoc}
      */
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'blameable' => [
@@ -81,7 +81,7 @@ class Section extends ActiveRecord
     /**
      * {@inheritDoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => Yii::t('simialbi/formbuilder/models/section', 'Id'),

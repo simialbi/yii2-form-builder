@@ -44,19 +44,25 @@ use yii\widgets\Pjax;
                 <?= FAS::i('trash-alt'); ?>
             </a>
             <a href="#sa-section-collapse-<?= $i; ?>" data-toggle="collapse"
-               aria-expanded="<?= $i === 0 ? 'true' : 'false'; ?>" aria-controls="sa-section-collapse-<?= $i; ?>">
+               aria-expanded="false" aria-controls="sa-section-collapse-<?= $i; ?>">
                 <?= FAS::i('angle-down'); ?>
             </a>
         </h4>
     </div>
-    <div id="sa-section-collapse-<?= $i; ?>" class="collapse<?= $i === 0 ? ' show' : ''; ?>"
+    <div id="sa-section-collapse-<?= $i; ?>" class="collapse"
          data-parent="#sa-formbuilder-sections">
         <div class="card-body">
             <?= $form->field($section, "[$i]default_number_of_cols", [
                 'options' => [
                     'class' => ['form-group']
                 ]
-            ])->textInput(['type' => 'number', 'min' => 2, 'max' => 6]); ?>
+            ])->dropdownList([
+                1 => 1,
+                2 => 2,
+                3 => 3,
+                4 => 4,
+                6 => 6
+            ]); ?>
 
             <fieldset>
                 <legend><?= Yii::t('simialbi/formbuilder/section', 'Section fields'); ?></legend>

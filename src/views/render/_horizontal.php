@@ -4,6 +4,7 @@
 /** @var $form \yii\bootstrap4\ActiveForm */
 /** @var $model \yii\base\DynamicModel */
 /** @var $sections \simialbi\yii2\formbuilder\models\Section[] */
+/** @var $relations \yii\db\ActiveRecord[] */
 
 $form->layout = $form::LAYOUT_HORIZONTAL;
 ?>
@@ -19,8 +20,10 @@ $form->layout = $form::LAYOUT_HORIZONTAL;
                 <?= $this->render('_field', [
                     'field' => $field,
                     'form' => $form,
+                    'section' => $section,
                     'model' => $model,
-                    'options' => ['class' => 'form-row']
+                    'options' => ['class' => 'form-row'],
+                    'relations' => $relations
                 ]); ?>
             <?php endfor; ?>
         </div>

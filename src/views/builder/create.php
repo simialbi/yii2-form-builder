@@ -12,8 +12,10 @@ use yii\bootstrap4\Html;
 /** @var $layouts array */
 /** @var $fieldTypes array */
 /** @var $relationClasses array */
-/* @var $validators array */
+/** @var $validators array */
 /** @var $validatorOptions array */
+/** @var $allActions array */
+/** @var $actionOptions array */
 
 FormBuilderAsset::register($this);
 
@@ -35,12 +37,15 @@ $this->params['breadcrumbs'] = [
         'form' => $form,
         'model' => $model,
         'sections' => $sections,
+        'actions' => [],
         'languages' => $languages,
         'layouts' => $layouts,
         'fieldTypes' => $fieldTypes,
         'relationClasses' => $relationClasses,
         'validators' => $validators,
-        'validatorOptions' => $validatorOptions
+        'validatorOptions' => $validatorOptions,
+        'allActions' => $allActions,
+        'actionOptions' => $actionOptions
     ]); ?>
 
     <div class="form-row mt-4">

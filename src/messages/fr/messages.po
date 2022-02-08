@@ -11,11 +11,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 msgctxt "simialbi/formbuilder"
+msgid "Actions"
+msgstr ""
+
+msgctxt "simialbi/formbuilder"
+msgid "Add action"
+msgstr ""
+
+msgctxt "simialbi/formbuilder"
 msgid "Add field"
 msgstr ""
 
 msgctxt "simialbi/formbuilder"
 msgid "Add section"
+msgstr ""
+
+msgctxt "simialbi/formbuilder"
+msgid "Add validator"
 msgstr ""
 
 msgctxt "simialbi/formbuilder"
@@ -30,28 +42,32 @@ msgctxt "simialbi/formbuilder"
 msgid "My forms"
 msgstr ""
 
-msgctxt "simialbi/formbuilder/dependency-operator"
-msgid "Equal"
+msgctxt "simialbi/formbuilder"
+msgid "Save"
 msgstr ""
 
-msgctxt "simialbi/formbuilder/dependency-operator"
-msgid "Grater than"
+msgctxt "simialbi/formbuilder"
+msgid "Sections"
 msgstr ""
 
-msgctxt "simialbi/formbuilder/dependency-operator"
-msgid "Lower than"
+msgctxt "simialbi/formbuilder"
+msgid "Update form"
 msgstr ""
 
-msgctxt "simialbi/formbuilder/dependency-operator"
-msgid "Not"
+msgctxt "simialbi/formbuilder/action"
+msgid "Action {action}"
 msgstr ""
 
 msgctxt "simialbi/formbuilder/field"
 msgid "Dependency settings"
-msgstr ""
+msgstr "@@@@"
 
 msgctxt "simialbi/formbuilder/field"
 msgid "Relation settings"
+msgstr ""
+
+msgctxt "simialbi/formbuilder/field"
+msgid "Validators"
 msgstr ""
 
 msgctxt "simialbi/formbuilder/field-type"
@@ -80,6 +96,10 @@ msgstr ""
 
 msgctxt "simialbi/formbuilder/field-type"
 msgid "Radio"
+msgstr ""
+
+msgctxt "simialbi/formbuilder/field-type"
+msgid "Rich text"
 msgstr ""
 
 msgctxt "simialbi/formbuilder/field-type"
@@ -146,6 +166,26 @@ msgctxt "simialbi/formbuilder/model/Form"
 msgid "Updated by"
 msgstr ""
 
+msgctxt "simialbi/formbuilder/models/action"
+msgid "Class"
+msgstr ""
+
+msgctxt "simialbi/formbuilder/models/action"
+msgid "Id"
+msgstr ""
+
+msgctxt "simialbi/formbuilder/models/action"
+msgid "Name"
+msgstr ""
+
+msgctxt "simialbi/formbuilder/models/action"
+msgid "Properties"
+msgstr ""
+
+msgctxt "simialbi/formbuilder/models/action"
+msgid "Translation category"
+msgstr ""
+
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Created at"
 msgstr ""
@@ -156,14 +196,22 @@ msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Default value"
+msgstr "@@@@"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Define a string format for this field. Use <b>a</b> as placeholder for an alpha character and <b>9</b> for a numeric character. Content between <b>[</b> and <b>]</b> is considered as optional user input."
 msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Dependency"
-msgstr ""
+msgstr "@@@@"
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Dependency operator"
+msgstr "@@@@"
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Format"
 msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
@@ -176,11 +224,11 @@ msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Max"
-msgstr ""
+msgstr "@@@@"
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Min"
-msgstr ""
+msgstr "@@@@"
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Multiple"
@@ -188,6 +236,10 @@ msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Name"
+msgstr ""
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Options"
 msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
@@ -204,7 +256,7 @@ msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Required"
-msgstr ""
+msgstr "@@@@"
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Section"
@@ -220,6 +272,22 @@ msgstr ""
 
 msgctxt "simialbi/formbuilder/models/field"
 msgid "Updated by"
+msgstr ""
+
+msgctxt "simialbi/formbuilder/models/field"
+msgid "Width"
+msgstr ""
+
+msgctxt "simialbi/formbuilder/models/form-action"
+msgid "Action"
+msgstr ""
+
+msgctxt "simialbi/formbuilder/models/form-action"
+msgid "Configuration"
+msgstr ""
+
+msgctxt "simialbi/formbuilder/models/form-action"
+msgid "Form"
 msgstr ""
 
 msgctxt "simialbi/formbuilder/models/section"

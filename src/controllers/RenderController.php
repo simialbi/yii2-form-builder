@@ -23,33 +23,55 @@ class RenderController extends Controller
 
     /**
      * @param integer $id
-     * @throws NotFoundHttpException
+     *
+     * @return string
+     *
+     * @throws NotFoundHttpException|\yii\base\InvalidConfigException
      */
-    public function actionForm(int $id)
+    public function actionForm(int $id): string
     {
         $form = $this->findForm($id);
         $model = new DynamicModel();
+        $relations = [];
 
         foreach ($form->fields as $field) {
             $model->defineAttribute($field->name);
             $model->setAttributeLabel($field->name, $field->label);
+
+            if (!empty($field->relation_model) && class_exists($field->relation_model) && !isset($relations[$field->relation_model])) {
+                /** @var \yii\db\ActiveQuery $relation */
+                $relation = call_user_func([$field->relation_model, 'find']);
+                $relations[$field->relation_model] = $relation->all();
+            }
+
             foreach ($field->fieldValidators as $validator) {
                 $model->addRule($field->name, $validator->class, Json::decode($validator->configuration));
             }
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            foreach ($form->formActions as $formAction) {
+                if (!class_exists($formAction->action->class)) {
+                    // TODO: Log
+                    continue;
+                }
+                /** @var \simialbi\yii2\formbuilder\actions\BaseAction $action */
+                $configuration = Json::decode($formAction->configuration);
+                $configuration['class'] = $formAction->action->class;
+                $action = Yii::createObject($configuration);
 
+                $action->runWithParams([$form, $model]);
+            }
         }
 
         return $this->render('form', [
             'model' => $model,
             'name' => $form->name,
             'layout' => Inflector::camel2id($form->layout),
-            'sections' => $form->sections
+            'sections' => $form->sections,
+            'relations' => $relations
         ]);
     }
-
 
 
     /**

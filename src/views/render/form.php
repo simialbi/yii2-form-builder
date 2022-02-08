@@ -6,6 +6,7 @@ use yii\bootstrap4\Html;
 /** @var $this \yii\web\View */
 /** @var $model \yii\base\DynamicModel */
 /** @var $sections \simialbi\yii2\formbuilder\models\Section[] */
+/** @var $relations \yii\db\ActiveRecord[] */
 /** @var $name string */
 /** @var $layout string */
 
@@ -18,7 +19,8 @@ $this->params['breadcrumbs'] = [$this->title];
         <?= $this->render("_$layout", [
             'model' => $model,
             'form' => $form,
-            'sections' => $sections
+            'sections' => $sections,
+            'relations' => $relations
         ]); ?>
         <div class="form-group mt-3 text-right">
             <?= Html::submitButton(Yii::t('simialbi/formbuilder', 'Save'), [
