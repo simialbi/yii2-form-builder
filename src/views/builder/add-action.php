@@ -22,7 +22,8 @@ Pjax::begin([
         'skipOuterContainers' => true
     ],
     'timeout' => 0
-]); ?>
+]);
+?>
     <a href="<?= Url::to(['builder/add-action', 'counter' => $counter + 1]); ?>"
        class="btn btn-primary btn-sm add-btn">
         <?= FAS::i('plus'); ?> <?= Yii::t('simialbi/formbuilder', 'Add action'); ?>

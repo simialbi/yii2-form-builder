@@ -212,6 +212,10 @@ class BuilderController extends Controller
         $model = new FormAction();
 
         $actions = Action::find()->all();
+        $actionOptions = [];
+        foreach ($actions as $action) {
+            $actionOptions[$action->id] = '';
+        }
 
         return $this->renderAjax('add-action', [
             'model' => $model,

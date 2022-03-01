@@ -99,7 +99,7 @@ echo $form->errorSummary($model);
             ],
             'timeout' => 0
         ]); ?>
-        <a href="<?= Url::to(['builder/add-action', 'counter' => 0]); ?>" class="btn btn-primary btn-sm btn-add">
+        <a href="<?= Url::to(['builder/add-action', 'counter' => count($actions)]); ?>" class="btn btn-primary btn-sm btn-add">
             <?= FAS::i('plus'); ?> <?= Yii::t('simialbi/formbuilder', 'Add action'); ?>
         </a>
         <?php Pjax::end(); ?>

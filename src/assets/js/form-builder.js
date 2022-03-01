@@ -45,13 +45,42 @@ window.sa.formBuilder = (function ($, JSONEditor) {
         },
 
         /**
+         *
+         */
+        changeSaveActionModel: function () {
+            var $this = $(this);
+            var index = this.selectedIndex;
+            var $element = $('select[name="' + $this.prop('id').replace(/^FormAction\[(\d+)\]\[configuration\]\[model\]/, 'FormAction\[$1\]\[action_id\]') + '"]');
+            window.setTimeout(function () {
+                pub.initAction.apply($element, [undefined, index - 1]);
+                editors[$element.prop('id')].on('ready', function () {
+                    var obj = {model: $this.val(), fields: {}},
+                        edit = editors[$element.prop('id')];
+                    $.each(edit.expandRefs(edit.schema.properties.fields).properties, function (key) {
+                        obj.fields[key] = "";
+                    })
+                    edit.setValue(obj);
+                });
+            }, 10);
+        },
+
+        /**
          * Initialize an action form
          * @param initValue
+         * @param {number} model
          */
-        initAction: function (initValue) {
-            var $this = $(this), $form = $($this.data('container')), schema = actions[$this.val()],
+        initAction: function (initValue, model) {
+            var $this = $(this), $form = $($this.data('container')), schema = $.extend(true, {}, actions[$this.val()]),
                 id = $this.prop('id'), formName = $this.attr('name').replace('action_id', 'configuration');
+            if (isNaN(model)) {
+                model = 0;
+            }
+            if (typeof schema.properties.fields !== 'undefined') {
+                schema.properties.fields.$ref += '?model=' + model;
+            }
             var options = {
+                ajax: true,
+                ajaxBase: window.location.protocol + '//' + window.location.hostname,
                 disable_edit_json: true,
                 disable_properties: true,
                 form_name_root: formName,
@@ -270,7 +299,7 @@ window.sa.formBuilder = (function ($, JSONEditor) {
     {
         $(document).on('pjax:end', function (evt, xhr, options) {
             var $container = $(options.container);
-            if (options.container === '#sa-formbuilder-section-pjax' || options.container.match(/^#sa-formbuilder-section-\d+-.+-pjax$/)) {
+            if (options.container === '#sa-formbuilder-section-pjax' || options.container.match(/^#sa-formbuilder-section-\d+-.+-pjax$/) || options.container === '#sa-formbuilder-action-pjax') {
                 $container.find('.card').appendTo($container.parent());
             }
         });

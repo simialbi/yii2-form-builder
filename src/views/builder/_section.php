@@ -10,7 +10,7 @@ use yii\widgets\Pjax;
 /** @var $i integer */
 /** @var $fieldTypes array */
 /** @var $relationClasses array */
-/* @var $validators array */
+/** @var $validators array */
 /** @var $validatorOptions array */
 
 ?>

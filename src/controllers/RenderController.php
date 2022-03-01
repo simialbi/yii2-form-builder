@@ -52,7 +52,6 @@ class RenderController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             foreach ($form->formActions as $formAction) {
                 if (!class_exists($formAction->action->class)) {
-                    // TODO: Log
                     continue;
                 }
                 /** @var \simialbi\yii2\formbuilder\actions\BaseAction $action */

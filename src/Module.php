@@ -10,6 +10,8 @@ use simialbi\yii2\formbuilder\models\Field;
 use simialbi\yii2\formbuilder\models\Form;
 use simialbi\yii2\models\UserInterface;
 use Yii;
+use yii\base\Application;
+use yii\base\BootstrapInterface;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveRecordInterface;
 use yii\helpers\Inflector;
@@ -20,7 +22,7 @@ use yii\validators\Validator;
  * Class Module
  * @package simialbi\yii2\formbuilder
  */
-class Module extends \simialbi\yii2\base\Module
+class Module extends \simialbi\yii2\base\Module implements BootstrapInterface
 {
     /**
      * {@inheritdoc}
@@ -149,5 +151,28 @@ class Module extends \simialbi\yii2\base\Module
         }
 
         parent::init();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function bootstrap($app)
+    {
+        if ($app instanceof \yii\web\Application) {
+            $app->urlManager->addRules([
+                [
+                    'class' => '\yii\web\UrlRule',
+                    'pattern' => $this->id . '/json/models',
+                    'route' => '/' . $this->id . '/json/models',
+                    'suffix' => '.json'
+                ],
+                [
+                    'class' => '\yii\web\UrlRule',
+                    'pattern' => $this->id . '/json/fields',
+                    'route' => '/' . $this->id . '/json/fields',
+                    'suffix' => '.json'
+                ]
+            ]);
+        }
     }
 }

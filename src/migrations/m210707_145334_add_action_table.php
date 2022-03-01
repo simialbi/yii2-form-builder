@@ -8,6 +8,7 @@ namespace simialbi\yii2\formbuilder\migrations;
 
 use yii\db\Migration;
 use yii\helpers\Json;
+use yii\helpers\Url;
 
 class m210707_145334_add_action_table extends Migration
 {
@@ -56,7 +57,7 @@ class m210707_145334_add_action_table extends Migration
             [1, 'Send mail', '\simialbi\yii2\formbuilder\actions\SendMailAction', Json::encode([
                 'title' => 'Settings',
                 'type' => 'object',
-                'required' => ['recipients', 'mailer'],
+                'required' => ['recipients', 'mailer', 'sender'],
                 'properties' => [
                     'sender' => [
                         'title' => 'Sender',
@@ -113,7 +114,24 @@ class m210707_145334_add_action_table extends Migration
                     ]
                 ]
             ])],
-            [2, 'Save', '\simialbi\yii2\formbuilder\actions\SaveAction', '{}'],
+            [2, 'Save', '\simialbi\yii2\formbuilder\actions\SaveAction', Json::encode([
+                'title' => 'Settings',
+                'type' => 'object',
+                'required' => [],
+                'properties' => [
+                    'model' => [
+                        '$ref' => '/form-builder/json/models.json'
+                    ],
+                    'fields' => [
+                        'type' => 'array',
+                        'format' => 'table',
+                        'uniqueItems' => true,
+                        'items' => [
+                            '$ref' => '/form-builder/json/fields.json'
+                        ]
+                    ]
+                ]
+            ])],
             [3, 'Generate pdf', '\simialbi\yii2\formbuilder\actions\GeneratePdfAction', Json::encode([
                 'title' => 'Settings',
                 'type' => 'object',

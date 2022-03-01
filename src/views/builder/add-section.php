@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
 /** @var $counter integer */
 /** @var $fieldTypes array */
 /** @var $relationClasses array */
-/* @var $validators array */
+/** @var $validators array */
 /** @var $validatorOptions array */
 
 $form = ActiveForm::begin(['id' => 'buildFormForm']);

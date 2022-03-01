@@ -18,7 +18,7 @@ use yii\helpers\Json;
             <?= Yii::t('simialbi/formbuilder/action', 'Action {action}', [
                 'action' => $model->isNewRecord ? '' : $model->action->translatedName
             ]); ?>
-            <h4 class="card-title flex-grow-0 pl-3 mb-0">
+            <h4 class="card-title flex-grow-0 pl-3 mb-0 ml-auto">
                 <a href="javascript:;" class="remove-action" data-remove=".sa-formbuilder-action">
                     <?= FAS::i('trash-alt'); ?>
                 </a>
